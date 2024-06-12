@@ -98,6 +98,10 @@ class Rectangle extends Shape {
         return 2 * (width + length);
     }
 
+    public double calculatePerimeter(int rec) {
+        return 2 * (width + length) / rec;
+    }
+
     // Polymorphic method to provide string representation of Rectangle
     @Override
     public String toString() {
@@ -117,9 +121,16 @@ public class Question2 {
         System.out.println(circle); // Output: Circle[radius=5.0,Shape[color=Red, filled=true]]
         System.out.println("Area of Circle: " + circle.calculateArea()); // Output: 78.53981633974483
         System.out.println("Perimeter of Circle: " + circle.calculatePerimeter()); // Output: 31.41592653589793
+        System.out.println("Perimeter of Circle: " + circle.calculatePerimeter()); // Output: 31.41592653589793
 
         System.out.println(rectangle); // Output: Rectangle[width=4.0,length=6.0,Shape[color=Blue, filled=false]]
         System.out.println("Area of Rectangle: " + rectangle.calculateArea()); // Output: 24.0
         System.out.println("Perimeter of Rectangle: " + rectangle.calculatePerimeter()); // Output: 20.0
+
+        // need cast for call method overloading superclass
+        if (rectangle instanceof Rectangle) {
+            Rectangle rect = (Rectangle) rectangle;
+            System.out.println("Perimeter Overloading of Rectangle: " + rect.calculatePerimeter(2));
+        }
     }
 }

@@ -57,8 +57,53 @@ class Circle extends Shape {
     }
 }
 ```
+On Inheritence , we can use annotation Overriding method `@Override` and Overloading method to manipulate a class or method behavior.  
 
-### **Abstraction**
+## **Overriding**
+
+Overriding is a process that allows child classes to modify the behavior of parent classes by redefining the methods defined in the parent class.
+```java
+abstract class Shape {
+    public abstract double calculatePerimeter();
+}
+@Override
+public double calculatePerimeter() {
+    return 2 * (width + length);
+}
+public static void main(String[] args) {
+    Shape rectangle = new Rectangle(4.0, 6.0, "Blue", false);
+    System.out.println("Perimeter of Rectangle: " + rectangle.calculatePerimeter()); // Output: 20.0
+}
+```
+
+
+## **Overloading**
+
+Overloading is a process that allows multiple functions or methods of the same name, but with different parameters, to be defined for a single class. 
+```java
+abstract class Shape {
+    public abstract double calculatePerimeter();
+}
+
+@Override
+public double calculatePerimeter() {
+    return 2 * (width + length);
+}
+
+public double calculatePerimeter(int rec) {
+    return 2 * (width + length) / rec;
+}
+
+public static void main(String[] args) {
+    Shape rectangle = new Rectangle(4.0, 6.0, "Blue", false);
+    if (rectangle instanceof Rectangle) {
+        Rectangle rect = (Rectangle) rectangle;
+        System.out.println("Perimeter Overloading of Rectangle: " + rect.calculatePerimeter(2));
+    }
+}
+```
+
+## **Abstraction**
 
 Abstraction is the process of hiding unnecessary details of an object’s internal structure. By abstracting an object’s data, its structure and behavior can be kept separate and more easily understood.
 
