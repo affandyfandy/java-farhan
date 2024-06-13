@@ -1,48 +1,39 @@
 package q3;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class Question3 {
 
-    private static Integer findMax(int[] arr) {
-        Integer max = arr[0];
-        for (Integer num : arr) {
-            if (num > max) {
-                max = num;
-            }
-        }
-        return max;
-    }
-
-    public static List<Integer> getSecondBiggestIndices(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            throw new IllegalArgumentException("Array must contain at least two elements.");
-        }
-
-        // Find the maximum value in the array
-        int max = findMax(arr);
-        int secondMax = Integer.MIN_VALUE;
-        List<Integer> secondMaxIndices = new ArrayList<>();
-
-        // Iterate to find the second max value and collect its indices
-        for (int i = 0; i < arr.length; i++) {
-            int num = arr[i];
-            if (num > secondMax && num < max) {
-                secondMax = num;
-                secondMaxIndices.clear();
-                secondMaxIndices.add(i);
-            } else if (num == secondMax) {
-                secondMaxIndices.add(i);
-            }
-        }
-
-        return secondMaxIndices;
-    }
-
     public static void main(String[] args) {
-        int[] input = { 1, 4, 3, -6, 5, 4 };
-        List<Integer> result = getSecondBiggestIndices(input);
-        System.out.println(result);
+        ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(1, 4, 3, -6, 5, 4));
+        System.out.println(findsecondMaxIndex(numbers)); // Output: [1, 5]
+    }
+
+    public static ArrayList<Integer> findsecondMaxIndex(ArrayList<Integer> numbers) {
+        int max = numbers.get(0);
+        int secondMax = numbers.get(0);
+        int temp = 0;
+
+        ArrayList<Integer> secondMaxIndexes = new ArrayList<>();
+
+        for (int i = 0; i < numbers.size(); i++) {
+
+            int number = numbers.get(i);
+            if (number > max) {
+                secondMax = max;
+                max = number;
+                temp = numbers.indexOf(secondMax);
+                secondMaxIndexes.clear();
+            }
+
+            if (number == secondMax) {
+                secondMaxIndexes.add(i);
+            }
+        }
+
+        secondMaxIndexes.add(0, temp);
+
+        return secondMaxIndexes;
     }
 }
