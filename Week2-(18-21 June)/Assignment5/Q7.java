@@ -35,8 +35,9 @@ public class Q7 {
         // Submit tasks to the executor
         executor.submit(task1);
         executor.submit(task2);
-        executor.submit(task1); // Submitting task1 again to test concurrency
-        
+        executor.submit(task1); 
+        // Submitting task1 again to test concurrency
+
         // Shutdown the executor
         executor.shutdown();
 

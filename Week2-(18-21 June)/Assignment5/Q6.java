@@ -1,4 +1,6 @@
 package Assignment5;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 /*
  * https://medium.com/@reetesh043/the-copyonwritearraylist-internals-a-deep-dive-ff3ebad87697#:~:text=CopyOnWriteArrayList%20provides%20a%20thread%2Dsafe,consistency%20and%20isolation%20for%20readers.
  */
@@ -29,11 +31,11 @@ package Assignment5;
 //         System.out.println("Modified List: " + arrayList);
 //     }
 // }
+
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Q6 {
     public static void main(String[] args) {
@@ -50,19 +52,13 @@ public class Q6 {
                 Integer num = arrayListIterator.next();
                 if (num == 2) {
                     // This will throw a ConcurrentModificationException in ArrayList
-                    arrayList.add(4); // Concurrent modification exception!                
+                    arrayList.add(4); // Concurrent modification exception!
                 }
             }
         } catch (ConcurrentModificationException e) {
             System.out.println("Caught ConcurrentModificationException in ArrayList!");
+            arrayList.remove(arrayList.size() - 1);
         }
-
-        // List all data in arrayList after the attempted modification
-        System.out.println("Contents of arrayList after modification attempt:");
-        for (Integer num : arrayList) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
 
         // CopyOnWriteArrayList Example
         List<Integer> copyOnWriteArrayList = new CopyOnWriteArrayList<>();
@@ -80,11 +76,8 @@ public class Q6 {
             }
         }
 
-        // List all data in copyOnWriteArrayList after the modification
-        System.out.println("Contents of copyOnWriteArrayList after modification:");
-        for (Integer num : copyOnWriteArrayList) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
+        // Print the final state of both lists
+        System.out.println("Final ArrayList: " + arrayList);
+        System.out.println("Final CopyOnWriteArrayList: " + copyOnWriteArrayList);
     }
 }
