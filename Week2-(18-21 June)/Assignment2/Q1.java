@@ -10,7 +10,7 @@ interface Plant {
     }
 }
 
-public class App implements Animal, Plant {
+public class Q1 implements Animal, Plant {
     // Override the eating() method to resolve the conflict
     @Override
     public String eating() {
@@ -21,7 +21,7 @@ public class App implements Animal, Plant {
     }
 
     public static void main(String[] args) {
-        App n1 = new App();
+        Q1 n1 = new Q1();
         System.out.println(n1.eating()); // Output: Nyam nyam....
     }
 }
