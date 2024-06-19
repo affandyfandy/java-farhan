@@ -3,7 +3,7 @@ package Assignment4;
 import java.util.Arrays;
 
 public class Q3 {
-    private static final int ARRAY_SIZE = 400;
+    private static final int ARRAY_SIZE = 50;
     private static final int NUM_THREADS = 4;
 
     public static void main(String[] args) {

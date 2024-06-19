@@ -1,40 +1,6 @@
 import java.util.ArrayList;
 
-class Teacher {
-    private String name;
-    private int age;
-    private Subject subject;
-
-    // Constructor to create a teacher with name and age
-    public Teacher(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    // Constructor to create a teacher with a subject
-    public Teacher(String name, int age, Subject subject) {
-        this.name = name;
-        this.age = age;
-        this.subject = subject;
-    }
-
-    // Method to assign a subject to the teacher
-    public void assignSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public void teaching() {
-        if (subject != null) {
-            System.out.println(
-                    "Teacher " + name + " with " + age + " years old " + "teaching " + subject.getName() + " for Class "
-                            + subject.getClassId());
-        } else {
-            System.out.println("Teacher " + name + " has no subject assigned.");
-        }
-    }
-}
-
-class Student {
+public class Student {
     private String name;
     private int age;
     private ArrayList<Subject> subjects;
