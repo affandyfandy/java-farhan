@@ -11,6 +11,18 @@ public class Q2 {
         list.add("Grapes");
         // Printing the arraylist object
         System.out.println(list);
+        // for (String s1 : list) {
+        // if (s1.equals("Apple")) {
+        // s1.remove(s1)
+        // }
+        // }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals("Apple")) { // Check if current element is "Apple"
+                list.remove(i); // Remove "Apple" from the list
+                i--; // Decrement i to adjust for the removed element
+            }
+        }
+        System.out.println(list);
         // Printing specifies index
         /*
          * index [0] = mango

@@ -14,4 +14,12 @@ public interface Account {
     static void bankPolicy() {
         System.out.println("Bank Policy: Withdrawal limit is $1000 per day.");
     }
+    
+    static void isValidAccountId(String accountId) {
+        if (accountId.matches("^(SA|CA)\\d+$")) {
+            System.out.println(">> Valid account ID: " + accountId);
+        } else {
+            System.out.println(">> Invalid account ID: " + accountId);
+        }
+    }
 }
