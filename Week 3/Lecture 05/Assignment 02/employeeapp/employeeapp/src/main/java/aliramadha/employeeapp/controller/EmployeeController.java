@@ -39,15 +39,23 @@ public class EmployeeController {
         }
         return ResponseEntity.notFound().build();
     }
-
-    @GetMapping("/department/{department}")
-    public ResponseEntity<List<Employee>> findEmployeeByDepartment(@PathVariable("department") String department) {
+    @GetMapping("/dep")
+    public ResponseEntity<List<Employee>> getEmployeesByDepartment(@RequestParam("department") String department) {
         List<Employee> employees = employeeRepository.findByDepartment(department);
         if (employees.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(employees);
     }
+    // use @Pathvariable
+//    @GetMapping("/department/{department}")
+//    public ResponseEntity<List<Employee>> findEmployeeByDepartment(@PathVariable("department") String department) {
+//        List<Employee> employees = employeeRepository.findByDepartment(department);
+//        if (employees.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(employees);
+//    }
 
 //    @GetMapping("/department/{department}")
 //    public ResponseEntity<List<Employee>> findEmployeeByDepartment(@PathVariable("department") String department) {
