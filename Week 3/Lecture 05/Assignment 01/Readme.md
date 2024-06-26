@@ -3,7 +3,7 @@
 ## `pre-requirement`
 
 - JDK : 18.0.2.1
-  - ![jdk version](/assets/jdk.png)
+  - ![jdk version](assets/jdk.png)
 - Database : mysql (latest version)
   - ![mysql version](assets/mysql.png)
 - IDE : intelij
