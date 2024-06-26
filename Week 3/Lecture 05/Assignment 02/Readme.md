@@ -3,37 +3,37 @@
 ## `pre-requirement`
 
 - JDK : 18.0.2.1
-  - ![jdk version](/Assignment%2002/assets/jdk.png)
+  - ![jdk version](assets/jdk.png)
 - Database : mysql (latest version)
-  - ![mysql version](/Assignment%2002/assets/mysql.png)
+  - ![mysql version](assets/mysql.png)
 - IDE : intelij
 
 ## Postman Result
 
 - @GetMapping // get all employees
 
-  - ![Get All](/Assignment%2002/assets/all.png)
+  - ![Get All](assets/all.png)
 
 - @GetMapping(value = "/{id}") // get employee detail by id
 
-  - ![Get by id](/Assignment%2002/assets/details.png)
+  - ![Get by id](assets/details.png)
 
 - @PostMapping // create new data
 
-  - ![post data](/Assignment%2002/assets/create.png)
+  - ![post data](assets/create.png)
 
 - @PutMapping(value = "/{id}") // update by id
 
-  - ![put data](/Assignment%2002/assets/edit.png)
+  - ![put data](assets/edit.png)
 
 - @DeleteMapping(value = "/{id}") // delete by id
 
-  - ![delete data](/Assignment%2002/assets/delete.png)
+  - ![delete data](assets/delete.png)
 
 - @GetMapping
 
-  - ![employ dep data](/Assignment%2002/assets/reqdep.png)
+  - ![employ dep data](assets/reqdep.png)
 
 - @PostMapping
 
-  - ![csv data](/Assignment%2002/assets/uploadcsv.png)
+  - ![csv data](assets/uploadcsv.png)
