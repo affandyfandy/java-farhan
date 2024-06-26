@@ -4,7 +4,7 @@ It’s better if you have another String field in StudentClass -->
 
 # **Stack & Heap**
 
-In java memory allocation divided into **Stack Memory** and **Heap Memory**
+In java memory allocation divided into **Stack Memory** and **Heap Memory**,Stack memory is used for storing method call frames and local variables, with each thread having its own stack. Heap memory, on the other hand, is where objects are allocated, particularly those created using the new keyword.
 
 ## **Stack Memory**
 
@@ -17,9 +17,26 @@ Whenever we call a new method, a new block is created on top of the stack which 
 Heap memory is used for the dynamic memory allocation of Java objects and JRE classes at runtime, It means the data can be add , update and delete in runtime.
 Stack memory is contains like array data, list data and others
 
+## Characteristic
+### Stack Memory
+- LIFO (Last In First Out): Stack memory operates on a LIFO principle.
+- Scope: It stores short-lived variables and references.
+- Size: Stack memory is smaller and more limited in size compared to heap memory.
+- Automatic Memory Management: Stack memory is automatically managed by the JVM, meaning it is freed when the method call ends.
+- Initial State: The reference 'obj' is created in the stack, pointing to the object in the heap.
+
+### Heap Memory
+- Dynamic Memory Allocation: Heap memory is used for dynamic memory allocation.
+- Size: Heap memory is larger and can grow as needed (within the limits set by the JVM).
+- Garbage Collection: Memory in the heap is managed through garbage collection, which reclaims memory used by objects that are no longer referenced.
+- Initial State: A new instance of 'class' is created for 'obj'.
+
 ## **Modify the object that the reference points to**
-___
+
+---
+
 ### **Updated MyClass become StudentClass**
+
 ```java
 class StudentClass {
     String name;
@@ -86,8 +103,11 @@ System.out.println("obj.value after modifyObject: " + s1.name + ", " + s1.gpa);
 Prints the updated value of the instance, and the output will be "obj.value after modifyObject: Yusuf, 3.70"
 
 ## **Cannot change the reference itself to point to a different object**
-___
+
+---
+
 ### **CODE 2**
+
 ```java
 package q6;
 
@@ -142,6 +162,7 @@ The new object will have different name and gpa.s2 have attr name is Putra and g
 ```java
 System.out.println("obj.value after changereference: " + s2.name + ", " + s2.gpa);
 ```
+
 s2 still reference the first StudentClass object. In heap, the original StudentClass object remains unchanged, while the new object created inside changeReferenceObject() is discarded after the method returns.
 It means new referece cannot to be change the original object
 So the output will be "obj.value after modifyObject: Yusuf, 3.70"
