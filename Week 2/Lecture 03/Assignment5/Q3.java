@@ -7,6 +7,7 @@ import java.util.*;
 
 public class Q3 {
     private static final String DIRECTORY_PATH = "Assignment5/sample/";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -17,7 +18,6 @@ public class Q3 {
         System.out.print("Enter output file path: ");
         String outputFileName = scanner.nextLine();
         String outputFile = DIRECTORY_PATH + outputFileName;
-
 
         System.out.print("Enter file type (csv/txt): ");
         String fileType = scanner.nextLine().toLowerCase();
@@ -58,13 +58,13 @@ public class Q3 {
             String[] headers = headerLine.split(",");
             int keyFieldIndex = Arrays.asList(headers).indexOf(keyField);
             if (keyFieldIndex == -1) {
-                throw new IllegalArgumentException("Key field not found in the header.");
+                throw new IllegalArgumentException("Key field '" + keyField + "' not found in the header.");
             }
 
             Set<String> uniqueKeys = new HashSet<>();
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
+                String[] fields = splitCSVLine(line);
                 if (fields.length > keyFieldIndex) {
                     String key = fields[keyFieldIndex];
                     if (uniqueKeys.add(key)) {
@@ -73,8 +73,38 @@ public class Q3 {
                     }
                 }
             }
-            System.out.println("Remove duplicate .csv successfully");
         }
+    }
+
+    private static String[] splitCSVLine(String line) {
+        List<String> fieldList = new ArrayList<>();
+        StringBuilder fieldBuilder = new StringBuilder();
+        boolean inQuotes = false;
+
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == '"') {
+                // Toggle quote state
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                // If not in quotes and encounter a comma, add current field to list
+                fieldList.add(fieldBuilder.toString());
+                fieldBuilder.setLength(0); // Clear the string builder for next field
+            } else {
+                // Otherwise, append character to current field
+                fieldBuilder.append(c);
+            }
+        }
+        // Add the last field
+        fieldList.add(fieldBuilder.toString());
+
+        // Remove leading and trailing whitespace from each field
+        List<String> trimmedFields = new ArrayList<>();
+        for (String field : fieldList) {
+            trimmedFields.add(field.trim());
+        }
+
+        return trimmedFields.toArray(new String[0]);
     }
 
     private static void removeDuplicatesFromTXT(String inputFile, String outputFile, int keyFieldIndex)
