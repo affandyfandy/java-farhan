@@ -1,4 +1,4 @@
-## Query Database
+# Query Database
 
 ## Create View
 
@@ -23,7 +23,7 @@ JOIN
 JOIN
     product p ON id.product_id = p.id;
 ```
-
+![photo](assets/view.png)
 ---
 
 ## Create Function
@@ -49,6 +49,18 @@ END //
 DELIMITER ;
 
 ```
+![photo](assets/calculate.png)
+
+### Example Usage
+
+```sql
+SELECT
+    c.id AS cashier_id,
+    c.name AS cashier_name,
+    calculate_revenue_by_cashier(c.id) AS total_revenue
+FROM
+    cashier c;
+```
 
 ## Create Table
 
@@ -64,35 +76,45 @@ CREATE TABLE revenue_report (
 );
 
 ```
+![photo table](assets/table.png)
+## Create Procedure Query
 
-## Create Query
+---
+
+Procedure process allows you to define a set of SQL statements that can be executed repeatedly without the need to rewrite them each time.
+
+- Simplify Code Management (stored processes can be invoked from multiple applications or queries, allowing complex business logic or database operations to be organised and managed in a more structured manner.)
+- Performance Optimisation (no need to resubmit the same code multiple times.)
+- Consistency and Security.
 
 #### Create store procedures to calculate and store output in revenue_report table:​
 
 - ### revenue of day: input day of year​
 
 ```sql
-DELIMITER //
 
-CREATE PROCEDURE calculate_daily_revenue(IN input_date DATE)
-BEGIN
-    DECLARE daily_revenue DECIMAL(10, 2);
+    DELIMITER //
 
-    SELECT IFNULL(SUM(amount), 0) INTO daily_revenue
-    FROM invoice
-    WHERE created_date = input_date;
+    CREATE PROCEDURE calculate_daily_revenue(IN input_date DATE)
+    BEGIN
+        DECLARE daily_revenue DECIMAL(10, 2);
 
-    INSERT INTO revenue_report (year, month, day, amount)
-    VALUES (YEAR(input_date), MONTH(input_date), DAY(input_date), daily_revenue);
-END //
+        SELECT IFNULL(SUM(amount), 0) INTO daily_revenue
+        FROM invoice
+        WHERE created_date = input_date;
 
-DELIMITER ;
+        INSERT INTO revenue_report (year, month, day, amount)
+        VALUES (YEAR(input_date), MONTH(input_date), DAY(input_date), daily_revenue);
+    END //
+
+    DELIMITER ;
 
 ```
 
 - ### revenue of month: input month of year​
 
 ```sql
+
 DELIMITER //
 
 CREATE PROCEDURE calculate_monthly_revenue(IN input_year INT, IN input_month INT)
@@ -151,7 +173,6 @@ CALL calculate_monthly_revenue(2024, 6);
 ```sql
 CALL calculate_annual_revenue(2024);
 ```
+![result](assets/procedure.png)
 
-## Restfull API best practice
-Compare restful api best practice with Assignment 2 – lecture 5 based on [This article](https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/).
-### Explaination
+
