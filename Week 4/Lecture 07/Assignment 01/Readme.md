@@ -104,5 +104,6 @@ public class AppConfiguration {
 
 Setter-Based Injection: Allows dependencies to be changed or injected after the object is created, offering more flexibility but potentially leading to less immutability.
 
-### Testing 
-![Result Testing](/Lecture%2007/Assignment%2001/assets/result.png)
+### Testing
+
+![Result Testing](./assets/result.png)
