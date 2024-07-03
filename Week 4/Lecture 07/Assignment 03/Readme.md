@@ -7,31 +7,31 @@
 
 ## 👨‍💻 Implementation
 
-1. [**`EmailService` Interface**](/Lecture%2007/Assignment%2003/task1/ass4/src/main/java/aliramadhan/ass4/service/EmailService.java)
+1. [**`EmailService` Interface**](./task1/ass4/src/main/java/aliramadhan/ass4/service/EmailService.java)
 
 This interface defines the sendEmail method that must be implemented by classes that implement this interface. This method is used to send an email with the parameters to, subject, and body.
 
 ### @scope ('prototype')
 
-3. [**`EmployeeServiceConstructor` Class**](/Lecture%2007/Assignment%2003/task1/ass4/src/main/java/aliramadhan/ass4/service/EmailService.javaservice/EmployeeServiceConstructor.java)
+3. [**`EmployeeServiceConstructor` Class**](./task1/ass4/src/main/java/aliramadhan/ass4/service/EmployeeServiceConstructor.java)
    - @Service annotation: Indicates that this class is a Spring service bean managed by a Spring container.
    - The @Scope("singleton") annotation: Specifies that this bean has a singleton scope, which means only one instance of this bean will be created and shared across the application.
    - Dependency Injection with Field (@Autowired): ServiceEmail is injected directly into the emailService field.
 
 ### @scope ('singleton')
 
-[**`EmployeeServiceField` Class**](/Lecture%2007/Assignment%2003/task1/ass4/src/main/java/aliramadhan/ass4/service/EmployeeServiceField.java)
+[**`EmployeeServiceField` Class**](./task1/ass4/src/main/java/aliramadhan/ass4/service/EmployeeServiceField.java)
 
 - @Service annotation: Indicates that this class is a Spring service bean managed by a Spring container.
 - The @Scope("prototype") annotation: Specifies that this bean has a prototype scope, which means that whenever the bean is requested, a new instance will be created.
 - Dependency Injection with Constructors: ServiceEmail is injected through a constructor.
 
-[**`Lecture7Application` Class**](/Lecture%2007/Assignment%2003/task1/ass4/src/main/java/aliramadhan/ass4/Ass4Application.java)
+[**`Lecture7Application` Class**](./task1/ass4/src/main/java/aliramadhan/ass4/Ass4Application.java)
 Serves as the main application for the Java Spring Boot.
 
 ## Testing
 
-![result](/Lecture%2007/Assignment%2003/img/service.png)
+![result](./img/service.png)
 
 # Create a Controller and Test Request Scope
 
@@ -43,18 +43,18 @@ Simple Spring MVC controller that uses a **request-scoped** bean and a new bean 
 
 ## Implementation
 
-[**`EmployeeController` Class**](/Lecture%2007/Assignment%2003/task2/ass4/src/main/java/aliramadhan/ass4/controller/EmployeeController.java)
+[**`EmployeeController` Class**](./task2/ass4/src/main/java/aliramadhan/ass4/controller/EmployeeController.java)
 
 - @GetMapping("/notify-constructor"): Defines an endpoint /employee/notify-constructor. When this endpoint is accessed, the notifyEmployeeByConstructor method is called. It uses the employeeServiceConstructor to send a notification.
 - @GetMapping("/notify-field"): Defines an endpoint /employee/notify-field. When this endpoint is accessed, the notifyEmployeeByField method is called. It uses the employeeServiceField to send a notification.
 - @GetMapping("/notify-setter"): Defines an endpoint /employee/notify-setter. When this endpoint is accessed, the notifyEmployeeBySetter method is called. It uses the employeeServiceSetter to send a notification.
 
-[**`Lecture7Application` Class**](/Lecture%2007/Assignment%2003/task2/ass4/src/main/java/aliramadhan/ass4/controller/EmployeeController.java)
+[**`Lecture7Application` Class**](./task2/ass4/src/main/java/aliramadhan/ass4/Ass4Application.java)
 Serves as the main application for the Java Spring Boot.
 
 ### Testing
 
-![resutl img](/Lecture%2007/Assignment%2003/img/controller.png)
+![resutl img](./img/controller.png)
 
 # How to inject prototype Bean into singleton Bean ?
 
