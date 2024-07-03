@@ -10,32 +10,35 @@
 
 ## 👨‍💻 Implementation
 
-1. [**`EmailService` Interface**](Lecture 07/Assignment 02/ass2/ass2/src/main/java/aliramadhan/ass2/service/ServiceEmail.java)
+1. [**`EmailService` Interface**](/Lecture%2007/Assignment%2002/ass2/ass2/src/main/java/aliramadhan/ass2/service/ServiceEmail.java)
 
 This interface defines the sendEmail method that must be implemented by classes that implement this interface. This method is used to send an email with the parameters to, subject, and body.
 
-2. [**`EmailServiceImpl` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/service/EmailServiceImpl.java)
+2. [**`EmailServiceImpl` Class**](/Lecture%2007/Assignment%2002/ass2/ass2/src/main/java/aliramadhan/ass2/service/ServiceEmailImpl.java)
 
 This class implements ServiceEmail and provides a concrete implementation of the sendEmail method. The @Service annotation indicates that this is a Spring service bean that can be automated injection into other components.
 
-3. [**`EmployeeServiceConstructor` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/service/EmployeeServiceConstructor.java)
+3. [**`EmployeeServiceConstructor` Class**](/Lecture%2007/Assignment%2002/ass2/ass2/src/main/java/aliramadhan/ass2/service/ServiceEmailImpl.java/EmployeeServiceConstructor.java)
 
 This class uses a constructor for dependency injection. ServiceEmail is injected through a constructor annotated with @Autowired. The notifyEmployee method is used to send email notifications to employees.
 
-4. [**`EmployeeServiceField` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/service/EmployeeServiceField.java)
+4. [**`EmployeeServiceField` Class**](/Lecture%2007/Assignment%2002/ass2/ass2/src/main/java/aliramadhan/ass2/service/ServiceEmployeeField.java)
 
 This class uses dependency injection through fields. The emailService field is injected directly with the @Autowired annotation.
 
-5. [**`EmployeeServiceSetter` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/service/EmployeeServiceSetter.java)
+5. [**`EmployeeServiceSetter` Class**](/Lecture%2007/Assignment%2002/ass2/ass2/src/main/java/aliramadhan/ass2/service/ServiceEmployeeSetter.java)
 
 This class uses setters for dependency injection. The setEmailService method is annotated @Autowired to inject ServiceEmail dependencies.
 
-6. [**`AppConfig` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/config/AppConfig.java)
+6. [**`AppConfig` Class**](/Lecture%2007/Assignment%2002/ass2/ass2/src/main/java/aliramadhan/ass2/config/AppConfig.java)
 
    This class is a Spring configuration that uses the @Configuration and @ComponentScan annotations. The @ComponentScan annotation is used to set the base package that Spring will scan for managed components (such as @Service, @Controller, @Repository, etc.).
 
-7. [**`Lecture7Application` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/Lecture7Application.java)
+7. [**`Lecture7Application` Class**](/Lecture%2007/Assignment%2002/ass2/ass2/src/main/java/aliramadhan/ass2/Ass2Application.java)
    Serves as the main application for the Java Spring Boot.
+
+## Testing
+![testing](/Lecture%2007/Assignment%2002/asset/result.png)
 
 # Compare (constructor, field, and setter injection)
 
