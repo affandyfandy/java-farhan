@@ -1,4 +1,41 @@
-#
+# Working with Annotations
+
+**Objective**: Create `EmailService` interface and `EmailServiceImpl` class. Add a method for sending email. Create `EmployeeService` class and use `EmailService` with Dependency Injection (DI) to send emails to employees about their work. Demonstrate DI using constructor, field, and setter injection.
+
+## Dependency Injection Methods
+
+1. **Constructor Injection**: This method injects dependencies through the class constructor. This method makes dependencies simple, explicit, and immutable (often preffered).
+2. **Field Injection**: This method injects dependencies directly into the fields of the class. This method makes hides dependencies and makes testing harder (less preferred).
+3. **Setter Injection**: This method injects dependencies through setter methods. This methos is usefull for optional dependencies or where dependencies are subject to alter while an object is being used.
+
+## 👨‍💻 Implementation
+
+1. [**`EmailService` Interface**](Lecture 07/Assignment 02/ass2/ass2/src/main/java/aliramadhan/ass2/service/ServiceEmail.java)
+
+This interface defines the sendEmail method that must be implemented by classes that implement this interface. This method is used to send an email with the parameters to, subject, and body.
+
+2. [**`EmailServiceImpl` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/service/EmailServiceImpl.java)
+
+This class implements ServiceEmail and provides a concrete implementation of the sendEmail method. The @Service annotation indicates that this is a Spring service bean that can be automated injection into other components.
+
+3. [**`EmployeeServiceConstructor` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/service/EmployeeServiceConstructor.java)
+
+This class uses a constructor for dependency injection. ServiceEmail is injected through a constructor annotated with @Autowired. The notifyEmployee method is used to send email notifications to employees.
+
+4. [**`EmployeeServiceField` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/service/EmployeeServiceField.java)
+
+This class uses dependency injection through fields. The emailService field is injected directly with the @Autowired annotation.
+
+5. [**`EmployeeServiceSetter` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/service/EmployeeServiceSetter.java)
+
+This class uses setters for dependency injection. The setEmailService method is annotated @Autowired to inject ServiceEmail dependencies.
+
+6. [**`AppConfig` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/config/AppConfig.java)
+
+   This class is a Spring configuration that uses the @Configuration and @ComponentScan annotations. The @ComponentScan annotation is used to set the base package that Spring will scan for managed components (such as @Service, @Controller, @Repository, etc.).
+
+7. [**`Lecture7Application` Class**](/Week%2004/Lecture%2007/Assignment%2002/lecture_7/src/main/java/com/example/lecture_7/Lecture7Application.java)
+   Serves as the main application for the Java Spring Boot.
 
 # Compare (constructor, field, and setter injection)
 
@@ -121,17 +158,22 @@ Of course, we could have more beans implied:
 `Bean A → Bean B → Bean C → Bean D → Bean E → Bean A`
 
 ## Causes of Circular Dependency Injection
+
 - Direct Circular Dependency: Component A depends on Component B, and Component B depends on Component A.
 - Indirect Circular Dependency: Component A depends on Component B, Component B depends on Component C, and Component C depends on Component A.
 - Problems Caused by Circular Dependencies
 - Initialization Issues: Circular dependencies can cause issues during the initialization of components, as the framework might not be able to resolve the dependencies properly.
 - Runtime Errors: If the circular dependencies are not handled correctly, they can lead to runtime errors and crashes.
 - Maintenance Difficulties: Circular dependencies make the codebase harder to understand, test, and maintain.
+
 ## How to Detect Circular Dependencies
+
 - Static Analysis Tools: Use static analysis tools that can detect circular dependencies in the codebase.
 - Manual Code Review: Regular code reviews can help identify and resolve circular dependencies.
 - Dependency Graphs: Visualizing dependencies using graphs can help spot circular references.
+
 ## Solutions to Circular Dependency Injection
+
 - Refactoring Code: Break down the components to eliminate circular dependencies. This might involve redesigning the architecture to remove the direct or indirect circular references.
 - Using Interfaces: Introduce interfaces to decouple the dependencies. Instead of having classes depend on each other directly, they depend on interfaces.
 - Dependency Injection Patterns:
