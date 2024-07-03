@@ -109,6 +109,37 @@ public class EmployeeService {
 2. Use Setter Injection for optional dependencies when needed.
 3. Avoid Field Injection in favor of the above methods for cleaner, more maintainable, and testable code.
 
+# Research about “Circular dependency injection”
+
+## Definition
+
+Circular dependency injection occurs when two or more components depend on each other directly or indirectly, leading to a cycle. This can be problematic in dependency injection frameworks because it can create infinite loops or other runtime issues.
+
+A circular dependency occurs when a bean A depends on another bean B, and the bean B depends on bean A as well:
+`Bean A → Bean B → Bean A`
+Of course, we could have more beans implied:
+`Bean A → Bean B → Bean C → Bean D → Bean E → Bean A`
+
+## Causes of Circular Dependency Injection
+- Direct Circular Dependency: Component A depends on Component B, and Component B depends on Component A.
+- Indirect Circular Dependency: Component A depends on Component B, Component B depends on Component C, and Component C depends on Component A.
+- Problems Caused by Circular Dependencies
+- Initialization Issues: Circular dependencies can cause issues during the initialization of components, as the framework might not be able to resolve the dependencies properly.
+- Runtime Errors: If the circular dependencies are not handled correctly, they can lead to runtime errors and crashes.
+- Maintenance Difficulties: Circular dependencies make the codebase harder to understand, test, and maintain.
+## How to Detect Circular Dependencies
+- Static Analysis Tools: Use static analysis tools that can detect circular dependencies in the codebase.
+- Manual Code Review: Regular code reviews can help identify and resolve circular dependencies.
+- Dependency Graphs: Visualizing dependencies using graphs can help spot circular references.
+## Solutions to Circular Dependency Injection
+- Refactoring Code: Break down the components to eliminate circular dependencies. This might involve redesigning the architecture to remove the direct or indirect circular references.
+- Using Interfaces: Introduce interfaces to decouple the dependencies. Instead of having classes depend on each other directly, they depend on interfaces.
+- Dependency Injection Patterns:
+- - Constructor Injection: Avoid circular dependencies by injecting dependencies via constructors and ensuring they do not form a cycle.
+- - Property Injection: Use property setters for dependencies that might be optional or need to be set after the object is created.
+- - Lazy Initialization: Use lazy initialization for dependencies that are expensive to create or might form circular dependencies.
+- Factory Pattern: Use a factory class to create instances of components. This can help manage the creation and resolution of dependencies.
+
 # Explain and give examples annotations
 
 ## 1. @Configuration
