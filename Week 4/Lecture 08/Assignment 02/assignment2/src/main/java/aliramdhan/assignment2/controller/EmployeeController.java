@@ -26,7 +26,9 @@ public class EmployeeController {
 
     @Autowired
     private final EmployeeRepository employeeRepository;
-
+    /**
+     * This method retrieves all employee data from the database
+     */
     @GetMapping ("/all")
     public ResponseEntity<List<Employee>> listAllEmployee() {
         List<Employee> employees;
@@ -37,7 +39,9 @@ public class EmployeeController {
 
         return ResponseEntity.ok(employees);
     }
-
+    /**
+     * This method retrieves an employee based department
+     */
     @GetMapping ("/department")
     public ResponseEntity<List<Employee>> listAllEmployee(@RequestParam(value = "department", required = false) String departmentId) {
         List<Employee> employees;
@@ -56,10 +60,7 @@ public class EmployeeController {
     }
 
     /**
-     * This method retrieves an employee from the database by its id.
-     *
-     * @param id The unique identifier of the employee.
-     * @return ResponseEntity<Employee> - A response entity containing the employee if found, or a 404 Not Found status code if not found.
+     * This method retrieves an employee from the database by its id
      */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Employee> findEmployeeById(@PathVariable("id") String id) {
@@ -72,10 +73,6 @@ public class EmployeeController {
 
     /**
      * This method saves an employee to the database.
-     *
-     * @param employee The employee object to be saved.
-     * @return ResponseEntity<Employee> - A response entity containing the saved employee.
-     * If the employee already exists in the database, it returns a HTTP status code 400 (Bad Request).
      */
     @PostMapping
     public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee) {
@@ -88,10 +85,6 @@ public class EmployeeController {
 
     /**
      * This method updates an employee in the database by its id.
-     *
-     * @param id The unique identifier of the employee.
-     * @param employeeForm The updated employee information.
-     * @return ResponseEntity<Employee> - A response entity containing the updated employee if found, or a 404 Not Found status code if not found.
      */
     @PutMapping(value = "/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") String id,
@@ -112,9 +105,6 @@ public class EmployeeController {
 
     /**
      * This method deletes an employee from the database by its id.
-     *
-     * @param id The unique identifier of the employee to be deleted.
-     * @return ResponseEntity<Employee> - A response entity containing the deleted employee if found, or a 404 Not Found status code if not found.
      */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Employee> deleteEmployee(@PathVariable(value = "id") String id) {
