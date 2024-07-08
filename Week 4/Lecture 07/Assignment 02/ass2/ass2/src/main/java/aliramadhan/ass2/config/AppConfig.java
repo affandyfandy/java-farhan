@@ -1,0 +1,9 @@
+package aliramadhan.ass2.config;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages = "aliramadhan.ass2")
+public class AppConfig {
+}
