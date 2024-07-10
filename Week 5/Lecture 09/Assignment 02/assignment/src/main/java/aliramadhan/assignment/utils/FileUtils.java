@@ -27,13 +27,6 @@ public class FileUtils {
         return employees;
     }
 
-    /**
-     * Parses an array of attributes into an Employee object.
-     *
-     * @param attributes an array of strings representing the employee's id, name,
-     *                   date of birth, address, and department.
-     * @return an Employee object created from the provided attributes.
-     */
     public static Employee fromCSV(String[] attributes) {
         String id = attributes[0];
         String name = attributes[1];
