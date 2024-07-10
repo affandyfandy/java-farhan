@@ -1,98 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>List of Employees</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body class="bg-gray-100">
-    <div
-      class="container mx-auto p-4 flex flex-col justify-center items-center"
-    >
-      <h1 class="text-2xl font-bold mb-4">List of Employees</h1>
-      <div class="w-full flex justify-between items-center gap-8">
-        <a
-          th:href="@{/employees/add}"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block"
-        >
-          Add New Employee
-        </a>
-        <form
-          th:action="@{/employees/upload}"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <input type="file" name="file" class="border p-2" required />
-          <button type="submit" class="bg-blue-500 text-white px-4 py-2">
-            Upload CSV
-          </button>
-        </form>
-      </div>
-      <table class="table-auto w-full">
-        <thead>
-          <tr>
-            <th class="px-4 py-2">ID</th>
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">DOB</th>
-            <th class="px-4 py-2">Address</th>
-            <th class="px-4 py-2">Department</th>
-            <th class="px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="employee : ${employeePage.getContent()}">
-            <td class="border px-4 py-2" th:text="${employee.id}"></td>
-            <td class="border px-4 py-2" th:text="${employee.name}"></td>
-            <td class="border px-4 py-2" th:text="${employee.dob}"></td>
-            <td class="border px-4 py-2" th:text="${employee.address}"></td>
-            <td class="border px-4 py-2" th:text="${employee.department}"></td>
-            <td class="border px-4 py-2">
-              <a
-                th:href="@{/employees/edit(employeeId=${employee.id})}"
-                class="text-blue-500 hover:text-blue-700 mr-2"
-                >Edit</a
-              >
-              <a
-                th:href="@{/employees/delete(employeeId=${employee.id})}"
-                class="text-red-500 hover:text-red-700"
-                >Delete</a
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="flex justify-between items-center py-3 px-20">
-        <a
-          th:href="@{/employees/list(page=${currentPage - 1})}"
-          th:classappend="${currentPage == 0} ? 'disabled' : ''"
-          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
-        >
-          Previous
-        </a>
-        <div class="flex gap-2">
-          <span th:each="i : ${#numbers.sequence(startPage, endPage - 1)}">
-            <a
-              th:href="@{/employees/list(page=${i})}"
-              th:text="${i + 1}"
-              th:classappend="${i == currentPage} ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'"
-              class="px-4 py-2 text-sm font-medium rounded-lg"
-            >
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4 flex flex-col justify-center items-center">
+        <h1 class="text-2xl font-bold mb-4">List of Employees</h1>
+        <div class="w-full flex justify-between items-center gap-8">
+            <a th:href="@{/employees/add}"
+               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
+                Add New Employee
             </a>
-          </span>
+            <form th:action="@{/employees/upload}" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" class="border p-2" required />
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2">Upload CSV</button>
+            </form>
         </div>
-        <a
-          th:href="@{/employees/list(page=${currentPage + 1})}"
-          th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''"
-          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
-        >
-          Next
-        </a>
-      </div>
+        <table class="table-auto w-full">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Name</th>
+                    <th class="px-4 py-2">DOB</th>
+                    <th class="px-4 py-2">Address</th>
+                    <th class="px-4 py-2">Department</th>
+                    <th class="px-4 py-2">Salary</th>
+                    <th class="px-4 py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="employee : ${employeePage.getContent()}">
+                    <td class="border px-4 py-2" th:text="${employee.id}"></td>
+                    <td class="border px-4 py-2" th:text="${employee.name}"></td>
+                    <td class="border px-4 py-2" th:text="${employee.dob}"></td>
+                    <td class="border px-4 py-2" th:text="${employee.address}"></td>
+                    <td class="border px-4 py-2" th:text="${employee.department}"></td>
+                    <td class="border px-4 py-2" th:text="${employee.salary}"></td>
+                    <td class="border px-4 py-2">
+                        <a th:href="@{/employees/edit(employeeId=${employee.id})}" class="text-blue-500 hover:text-blue-700 mr-2">Edit</a>
+                        <a th:href="@{/employees/delete(employeeId=${employee.id})}" class="text-red-500 hover:text-red-700">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="w-full flex justify-between items-center py-3">
+            <a th:href="@{/employees/list(page=${currentPage - 1})}" th:classappend="${currentPage == 0} ? 'disabled cursor-not-allowed opacity-50' : ''"
+               class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100">
+                Previous
+            </a>
+            <div class="flex gap-2">
+                <span th:each="i : ${#numbers.sequence(startPage, endPage - 1)}">
+                    <a th:href="@{/employees/list(page=${i})}" th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'"
+                       class="px-4 py-2 text-sm font-medium rounded-lg">
+                    </a>
+                </span>
+            </div>
+            <a th:href="@{/employees/list(page=${currentPage + 1})}" th:classappend="${currentPage == totalPages - 1} ? 'disabled cursor-not-allowed opacity-50' : ''"
+               class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100">
+                Next
+            </a>
+        </div>
     </div>
-  </body>
+</body>
 </html>

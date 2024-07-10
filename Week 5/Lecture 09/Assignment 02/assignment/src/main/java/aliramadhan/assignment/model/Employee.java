@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="employee")
+@Table(name = "employee")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,10 +21,11 @@ public class Employee {
 
     // Define all the fields
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private String id;
     private String name;
     private LocalDate dob;
     private String address;
     private String department;
+    private Integer salary;
 }

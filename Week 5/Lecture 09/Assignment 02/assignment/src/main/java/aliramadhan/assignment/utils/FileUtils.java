@@ -40,6 +40,7 @@ public class FileUtils {
         LocalDate dob = DateUtils.parseDate(attributes[2]);
         String address = attributes[3];
         String department = attributes[4];
-        return new Employee(id, name, dob, address, department);
+        Integer salary = Integer.parseInt(attributes[5]); // Parse salary as Integer
+        return new Employee(id, name, dob, address, department, salary);
     }
 }
