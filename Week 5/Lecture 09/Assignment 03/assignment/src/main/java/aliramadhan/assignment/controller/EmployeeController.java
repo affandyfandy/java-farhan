@@ -19,6 +19,7 @@ import com.lowagie.text.DocumentException;
 import aliramadhan.assignment.utils.PDFUtils;
 import java.io.IOException;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 
 // import java.util.List;
 
@@ -33,31 +34,22 @@ public class EmployeeController {
     @Autowired
     private PDFUtils pdfUtils;
 
-    // Mapping to list all employees
-    // @GetMapping("/list")
-    // public String listEmployees(Model model) {
-    // List<Employee> employees = employeeService.getAllEmployees();
-    // model.addAttribute("employees", employees);
-    // return "employees/list-employees";
-    // }
-    // @GetMapping("/list")
-    // public String listEmployees(Model theModel, @RequestParam(defaultValue = "0")
-    // int page) {
-    // Pageable pageable = PageRequest.of(page, 20); // 20 items per page
-    // Page<Employee> employeePage = employeeService.getAllEmployees(pageable);
-
-    // theModel.addAttribute("employees", employeePage);
-    // return "employees/list-employees";
-    // }
+    // Mapping to list all employees with pagination and sort
     @GetMapping("/list")
-    public String listEmployees(@RequestParam(defaultValue = "0") int page, Model model) {
+    public String listEmployees(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            Model model) {
         int pageSize = 10; // Define the number of employees per page
-        Pageable pageable = PageRequest.of(page, pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize,
+                sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
         Page<Employee> employeePage = employeeService.getAllEmployees(pageable);
 
         model.addAttribute("employeePage", employeePage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", Math.max(employeePage.getTotalPages(), 1));
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("sortDir", sortDir);
 
         // Calculate the range of page numbers to display
         int totalPages = Math.max(employeePage.getTotalPages(), 1);
