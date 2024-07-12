@@ -1,0 +1,4 @@
+id,name,age,department,position,salary,email,phoneNumber,dob
+ABC_213131,John Doe,30,Engineering,Software Engineer,60000,john.doe@example.com,+6281234567890,23/10/1981
+ABC_113131,Jane Smith,25,Marketing,Marketing Specialist,50000,jane.smith@example.com,+6281234567891,23/10/1981
+ABC_1321312,Bob Johnson,35,Sales,Sales Manager,70000,bob.johnson@example.com,+6281234567892,23/10/1981
