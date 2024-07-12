@@ -28,12 +28,12 @@ public class EmployeeController {
 
     private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
-
     @Autowired
     private EmployeeService employeeService;
 
     @GetMapping
-    public ResponseEntity<Object> getAllEmployees(@RequestParam(value = "department", required = false) String department) {
+    public ResponseEntity<Object> getAllEmployees(
+            @RequestParam(value = "department", required = false) String department) {
         try {
             List<EmployeeDTO> employees = employeeService.getAllEmployees(department);
             if (employees.isEmpty()) {
@@ -42,7 +42,8 @@ public class EmployeeController {
             return ResponseEntity.ok(employees);
         } catch (Exception e) {
             logger.error("Error retrieving employees data", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving employees: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error retrieving employees: " + e.getMessage());
         }
     }
 
@@ -56,7 +57,8 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             logger.error("Error retrieving employee", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving employee: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error retrieving employee: " + e.getMessage());
         }
     }
 
@@ -74,11 +76,11 @@ public class EmployeeController {
         }
     }
 
-
-
     @PutMapping("/{id}")
-    //    public ResponseEntity<Object> updateEmployee(@PathVariable String id, @Valid @RequestBody EmployeeDTO employeeDTO, BindingResult result) {
-    public ResponseEntity<?> updateEmployee(@PathVariable String id, @Valid @RequestBody EmployeeDTO employeeDTO, BindingResult result) {
+    // public ResponseEntity<Object> updateEmployee(@PathVariable String id, @Valid
+    // @RequestBody EmployeeDTO employeeDTO, BindingResult result) {
+    public ResponseEntity<?> updateEmployee(@PathVariable String id, @Valid @RequestBody EmployeeDTO employeeDTO,
+            BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation errors: " + result.getAllErrors());
         }
@@ -90,7 +92,8 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             logger.error("Error updating employee", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating employee: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error updating employee: " + e.getMessage());
         }
     }
 
@@ -104,7 +107,42 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             logger.error("Error deleting employee", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting employee: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting employee: " + e.getMessage());
+        }
+    }
+
+    // @PostMapping("/upload")
+    // public ResponseEntity<List<EmployeeDTO>> uploadCSV(@RequestParam("file")
+    // MultipartFile file) {
+    // if (!FileUtils.hasCSVFormat(file)) {
+    // return ResponseEntity.badRequest().body(null);
+    // }
+    // if (file.isEmpty()) {
+    // return ResponseEntity.badRequest().body(null);
+    // }
+    // List<EmployeeDTO> employeeDTOs = employeeService.saveEmployeesFromCSV(file);
+    // return ResponseEntity.ok(employeeDTOs);
+    // }
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadCSV(@RequestParam("file") MultipartFile file) {
+        // Check if the file is empty
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("File is empty");
+        }
+
+        // Check if the file format is valid
+        if (!FileUtils.hasCSVFormat(file)) {
+            return ResponseEntity.badRequest().body("Invalid format. Please upload a CSV file.");
+        }
+
+        try {
+            // Process the file and get the list of EmployeeDTOs
+            List<EmployeeDTO> employeeDTOs = employeeService.saveEmployeesFromCSV(file);
+            return ResponseEntity.ok(employeeDTOs);
+        } catch (Exception e) {
+            // Handle any other exceptions that may occur
+            return ResponseEntity.status(500).body("An error occurred while processing the file: " + e.getMessage());
         }
     }
 

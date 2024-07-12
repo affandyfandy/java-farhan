@@ -56,11 +56,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> employee = employeeRepository.findById(id);
         logger.info("Fetched Employee: {}", employee);
         EmployeeDTO employeeDTO = employeeMapper.toDTO(employee.get());
-//        EmployeeDTO employeeDTO = employeeMapper.toEmployeeDTO(employeeOpt.get());
+        // EmployeeDTO employeeDTO = employeeMapper.toEmployeeDTO(employeeOpt.get());
         logger.info("Mapped EmployeeDTO: {}", employeeDTO);
         return employeeDTO;
     }
-
 
     @Override
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
@@ -97,5 +96,18 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
         employeeRepository.delete(employee);
         logger.info("Deleted Employee: {}", employee);
+    }
+
+    @Override
+    public List<EmployeeDTO> saveEmployeesFromCSV(MultipartFile file) {
+        try {
+            List<Employee> employees = FileUtils.readEmployeesFromCSV(file);
+            List<Employee> savedEmployees = employeeRepository.saveAll(employees);
+            return savedEmployees.stream()
+                    .map(employeeMapper::toDTO)
+                    .toList();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to upload CSV file: " + e.getMessage());
+        }
     }
 }

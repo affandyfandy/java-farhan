@@ -12,4 +12,5 @@ public interface EmployeeService {
     List<EmployeeDTO> getAllEmployees(String department);
     EmployeeDTO updateEmployee(String id, EmployeeDTO employeeDTO);
     void deleteEmployee(String id);
+    List<EmployeeDTO> saveEmployeesFromCSV(MultipartFile file);
 }

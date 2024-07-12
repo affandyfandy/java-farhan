@@ -9,8 +9,22 @@ import java.util.List;
 import aliramadhan.assignment.model.Employee;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileUtils {
+    public static String TYPE = "text/csv";
+    static String[] HEADERs = { "name", "age", "department", "position", "salary" };
+    private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
+
+    public static boolean hasCSVFormat(MultipartFile file) {
+        if (!TYPE.equals(file.getContentType())) {
+            logger.error("Invalid file type: " + file.getContentType());
+            return false;
+        }
+        return true;
+    }
+
     public static List<Employee> readEmployeesFromCSV(MultipartFile file) throws IOException {
         List<Employee> employees = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
