@@ -1,0 +1,32 @@
+package aliramadahan.assignment.model;
+
+import java.time.LocalDate;
+
+import aliramadahan.assignment.model.key.TitleId;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@Entity
+@Table(name = "titles")
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+public class Title {
+
+    @EmbeddedId
+    private TitleId id;
+
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private LocalDate toDate;
+}

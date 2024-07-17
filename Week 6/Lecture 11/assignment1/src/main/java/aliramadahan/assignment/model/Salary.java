@@ -1,0 +1,36 @@
+package aliramadahan.assignment.model;
+
+import aliramadahan.assignment.model.key.SalaryId;
+import jakarta.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@Entity
+@Table(name = "salaries")
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+public class Salary {
+    @EmbeddedId
+    private SalaryId id;
+
+    @Column(nullable = false)
+    private Integer salary;
+
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private LocalDate toDate;
+}
