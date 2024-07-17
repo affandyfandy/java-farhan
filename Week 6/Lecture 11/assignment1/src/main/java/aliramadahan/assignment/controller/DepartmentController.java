@@ -55,7 +55,7 @@ public class DepartmentController {
         try {
             departmentService.save(department);
             logger.info("Successfully created department: {}", department);
-            return new ResponseEntity<>("Department created successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("Department created successfully",   HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("Error saving department", e);
             return new ResponseEntity<>("Error saving department: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
