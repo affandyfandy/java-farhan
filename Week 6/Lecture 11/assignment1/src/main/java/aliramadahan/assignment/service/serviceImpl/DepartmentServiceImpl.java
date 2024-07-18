@@ -6,6 +6,8 @@ import aliramadahan.assignment.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +20,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentServiceImpl.class);
     private final DepartmentRepository departmentRepository;
 
+
+
     @Override
-    public List<Department> findAll() {
-        return departmentRepository.findAll();
+    public Page<Department> findAll(Pageable pageable) {
+        if (pageable == null) {
+            throw new IllegalArgumentException("Invalid pagination and sorting parameters: null object");
+        }
+        return departmentRepository.findAll(pageable);
     }
+
 
     @Override
     public Department findById(String deptNo) {

@@ -27,6 +27,6 @@ public class Title {
     private TitleId id;
 
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "to_date")
     private LocalDate toDate;
 }

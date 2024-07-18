@@ -5,8 +5,13 @@ import aliramadahan.assignment.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +26,25 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping
-    public ResponseEntity<List<Department>> listDepartments() {
+    public ResponseEntity<Page<Department>> listDepartments(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size,
+            @RequestParam(defaultValue = "deptNo") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+
+        Pageable pageable = PageRequest.of(page, size,
+                sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
+
         try {
-            List<Department> departments = departmentService.findAll();
-            if (departments.isEmpty()) {
+            Page<Department> departmentPage = departmentService.findAll(pageable);
+            if (departmentPage.isEmpty()) {
                 logger.warn("No departments found.");
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(departments, HttpStatus.OK);
+            return new ResponseEntity<>(departmentPage, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            logger.error("Invalid pagination or sorting parameters", e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             logger.error("Error retrieving departments", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
