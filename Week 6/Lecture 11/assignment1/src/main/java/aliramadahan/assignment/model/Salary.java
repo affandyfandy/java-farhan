@@ -4,14 +4,6 @@ import aliramadahan.assignment.model.key.SalaryId;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,14 +15,19 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class Salary {
+public class Salary implements Serializable {
+
     @EmbeddedId
     private SalaryId id;
 
-    @Column(nullable = false)
+    @Column(name = "salary", nullable = false)
     private Integer salary;
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
+    @Column(name = "to_date", nullable = false)
     private LocalDate toDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+    private Employee employee;
+
 }

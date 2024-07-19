@@ -3,29 +3,33 @@ package aliramadahan.assignment.controller;
 import aliramadahan.assignment.model.Department;
 import aliramadahan.assignment.service.DepartmentService;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/department")
 public class DepartmentController {
 
-    private static final Logger logger = LoggerFactory.getLogger(DepartmentController.class);
-
+    @Autowired
     private final DepartmentService departmentService;
 
     @GetMapping
+    public ResponseEntity<List<Department>> getAllDepartments() {
+        List<Department> departments = departmentService.findAll();
+        return new ResponseEntity<>(departments, HttpStatus.OK);
+    }
+
+    @GetMapping("/page")
     public ResponseEntity<Page<Department>> listDepartments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "2") int size,
@@ -34,63 +38,30 @@ public class DepartmentController {
 
         Pageable pageable = PageRequest.of(page, size,
                 sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
-
-        try {
-            Page<Department> departmentPage = departmentService.findAll(pageable);
-            if (departmentPage.isEmpty()) {
-                logger.warn("No departments found.");
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(departmentPage, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            logger.error("Invalid pagination or sorting parameters", e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            logger.error("Error retrieving departments", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Page<Department> departmentPage = departmentService.findAll(pageable);
+        return new ResponseEntity<>(departmentPage, HttpStatus.OK);
     }
 
     @GetMapping("/{deptNo}")
     public ResponseEntity<Department> getDepartment(@PathVariable String deptNo) {
-        try {
-            Department department = departmentService.findById(deptNo);
-            if (department == null) {
-                logger.warn("Department with id {} not found.", deptNo);
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(department, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving department with id " + deptNo, e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Optional<Department> department = departmentService.findById(deptNo);
+        return department.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveDepartment(@RequestBody Department department) {
-        try {
-            departmentService.save(department);
-            logger.info("Successfully created department: {}", department);
-            return new ResponseEntity<>("Department created successfully",   HttpStatus.CREATED);
-        } catch (Exception e) {
-            logger.error("Error saving department", e);
-            return new ResponseEntity<>("Error saving department: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Department> saveDepartment(@RequestBody Department department) {
+        Department savedDepartment = departmentService.save(department);
+        return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);
     }
 
-
     @PutMapping("/{deptNo}")
-    public ResponseEntity<Void> updateDepartment(@PathVariable String deptNo, @RequestBody Department department) {
-        try {
-            Department updatedDepartment = departmentService.updateDepartment(deptNo, department);
-            if (updatedDepartment == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error updating department with id " + deptNo, e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Department> updateDepartment(@PathVariable String deptNo, @RequestBody Department department) {
+        Department updatedDepartment = departmentService.updateDepartment(deptNo, department);
+        if (updatedDepartment == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
     }
 
     @DeleteMapping("/{deptNo}")
@@ -99,7 +70,6 @@ public class DepartmentController {
             departmentService.deleteById(deptNo);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            logger.error("Error deleting department with id " + deptNo, e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -30,7 +30,7 @@ public class TitleController {
         return new ResponseEntity<>(titles, HttpStatus.OK);
     }
 
-//    @GetMapping("/paged")
+    //    @GetMapping("/paged")
 //    public ResponseEntity<Page<Title>> getAllTitles(Pageable pageable) {
 //        Page<Title> titles = titleService.findAll(pageable);
 //        return new ResponseEntity<>(titles, HttpStatus.OK);
@@ -71,7 +71,7 @@ public class TitleController {
         return new ResponseEntity<>(savedTitle, HttpStatus.CREATED);
     }
 
-//    @PutMapping("/{empNo}/{title}/{fromDate}")
+    //    @PutMapping("/{empNo}/{title}/{fromDate}")
 //    public ResponseEntity<Title> updateTitle(
 //            @PathVariable Integer empNo,
 //            @PathVariable String title,
@@ -129,9 +129,14 @@ public class TitleController {
     }
 
 
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTitleById(@PathVariable TitleId id) {
+    @DeleteMapping("/{empNo}/{title}/{fromDate}")
+    public ResponseEntity<Void> deleteTitleById(
+            @PathVariable Integer empNo,
+            @PathVariable String title,
+            @PathVariable String fromDate
+            ) {
+        LocalDate fromDateParsed = LocalDate.parse(fromDate);
+        TitleId id = new TitleId(empNo, title, fromDateParsed);
         titleService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

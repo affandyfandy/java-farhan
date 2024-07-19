@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TitleId implements Serializable {
+    @Column(name="emp_no")
     private Integer empNo;
+    @Column(name="title")
     private String title;
     @Column(name = "from_date")
     private LocalDate fromDate;

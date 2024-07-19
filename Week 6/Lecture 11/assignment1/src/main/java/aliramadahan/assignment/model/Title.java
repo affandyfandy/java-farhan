@@ -4,12 +4,7 @@ import java.time.LocalDate;
 
 import aliramadahan.assignment.model.key.TitleId;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,4 +24,8 @@ public class Title {
     @Temporal(TemporalType.DATE)
     @Column(nullable = false, name = "to_date")
     private LocalDate toDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+    private Employee employee;
 }
