@@ -262,3 +262,6 @@ Here's the documentation.
    ![update](./assets/title/update.png)
 6. **Delete Data**
    ![delete](./assets/title/delete.png)
+
+### Postman Collection
+Here is the [postman collection](./Employee%20Management.postman_collection.json) you can use to demo the API functionality this API.
