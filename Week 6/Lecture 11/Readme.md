@@ -209,13 +209,15 @@ Here's the documentation.
    ![all](./assets/emp/all.png)
 2. **List Page Data**
    ![page](./assets/emp/page.png)
-3. **Details Data**
+3. **Search Data**
+   ![page](./assets/emp/search.png)
+4. **Details Data**
    ![id](./assets/emp/byid.png)
-4. **Create Data**
+5. **Create Data**
    ![post](./assets/emp/post.png)
-5. **Update Data**
+6. **Update Data**
    ![update](./assets/emp/update.png)
-6. **Delete Data**
+7. **Delete Data**
    ![delete](./assets/emp/delete.png)
 
 #### Department Entity
@@ -264,4 +266,5 @@ Here's the documentation.
    ![delete](./assets/title/delete.png)
 
 ### Postman Collection
+
 Here is the [postman collection](./Employee%20Management.postman_collection.json) you can use to demo the API functionality this API.

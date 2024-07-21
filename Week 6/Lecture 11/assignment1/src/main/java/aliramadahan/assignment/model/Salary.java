@@ -1,6 +1,7 @@
 package aliramadahan.assignment.model;
 
 import aliramadahan.assignment.model.key.SalaryId;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -27,7 +28,9 @@ public class Salary implements Serializable {
     private LocalDate toDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+    @MapsId("empNo")
+    @JoinColumn(name = "emp_no")
+    @JsonBackReference
     private Employee employee;
 
 }

@@ -6,6 +6,7 @@ import aliramadahan.assignment.service.EmployeesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +45,10 @@ public class EmployeeServiceImpl implements EmployeesService {
     @Override
     public Employee updateEmployee(Employee employee) {
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public Page<Employee> findByCriteria(Specification<Employee> spec, Pageable pageable) {
+        return employeeRepository.findAll(spec, pageable);
     }
 }

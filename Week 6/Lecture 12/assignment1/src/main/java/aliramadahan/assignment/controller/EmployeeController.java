@@ -2,15 +2,19 @@ package aliramadahan.assignment.controller;
 
 import aliramadahan.assignment.model.Employee;
 import aliramadahan.assignment.service.EmployeesService;
+import aliramadahan.assignment.spesification.EmployeeSpesification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,4 +78,29 @@ public class EmployeeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/search")
+    public ResponseEntity<Page<Employee>> searchEmployees(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String gender,
+            @RequestParam(required = false) LocalDate hireDate,
+            @RequestParam(required = false) LocalDate birthDate,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size,
+            @RequestParam(defaultValue = "empNo") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+
+        Specification<Employee> spec = Specification.where(EmployeeSpesification.hasFirstName(firstName))
+                .and(EmployeeSpesification.hasLastName(lastName))
+                .and(EmployeeSpesification.hasGender(gender))
+                .and(EmployeeSpesification.hasHireDate(hireDate))
+                .and(EmployeeSpesification.hasBirthDate(birthDate));
+
+        Pageable pageable = PageRequest.of(page, size,
+                sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
+
+        Page<Employee> employees = employeesService.findByCriteria(spec, pageable);
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
+
 }

@@ -25,7 +25,7 @@ public class Title {
     @Column(nullable = false, name = "to_date")
     private LocalDate toDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
-    private Employee employee;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+//    private Employee employee;
 }

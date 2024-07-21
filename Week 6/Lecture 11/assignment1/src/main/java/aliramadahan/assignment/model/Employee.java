@@ -1,5 +1,6 @@
 package aliramadahan.assignment.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,6 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer empNo;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private LocalDate birthDate;
 
@@ -32,13 +32,14 @@ public class Employee {
     @Column(columnDefinition = "enum('M','F')", nullable = false)
     private String gender;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private LocalDate hireDate;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Title> titles;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Salary> salaries;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Title> titles;
 }

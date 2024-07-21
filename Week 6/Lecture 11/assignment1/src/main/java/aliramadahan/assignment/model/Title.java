@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import aliramadahan.assignment.model.key.TitleId;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,8 @@ public class Title {
     private LocalDate toDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+    @MapsId("empNo")
+    @JoinColumn(name = "emp_no")
+    @JsonBackReference
     private Employee employee;
 }

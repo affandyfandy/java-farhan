@@ -26,8 +26,8 @@ public class Salary implements Serializable {
     @Column(name = "to_date", nullable = false)
     private LocalDate toDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
-    private Employee employee;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+//    private Employee employee;
 
 }

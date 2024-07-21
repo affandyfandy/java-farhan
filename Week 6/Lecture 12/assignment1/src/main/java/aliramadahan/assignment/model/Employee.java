@@ -36,9 +36,4 @@ public class Employee {
     @Column(nullable = false)
     private LocalDate hireDate;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Title> titles;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Salary> salaries;
 }
