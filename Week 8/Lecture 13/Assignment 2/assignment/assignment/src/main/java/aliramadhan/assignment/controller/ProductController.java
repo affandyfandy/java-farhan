@@ -18,34 +18,33 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-
     @PostMapping
     public ResponseEntity<ProductDTO> saveProduct(@RequestBody ProductSaveDTO productSaveDTO) {
         ProductDTO productDTO = productService.saveProduct(productSaveDTO);
-        return ResponseEntity.ok(productDTO);
+        return ResponseEntity.ok().header("source", "fpt-software").body(productDTO);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductShowDTO> getProductById(@PathVariable String id) {
         ProductShowDTO productShowDTO = productService.getProductById(id);
-        return ResponseEntity.ok(productShowDTO);
+        return ResponseEntity.ok().header("source", "fpt-software").body(productShowDTO);
     }
 
     @GetMapping
     public ResponseEntity<Page<ProductShowDTO>> getAllProducts(Pageable pageable) {
         Page<ProductShowDTO> products = productService.getAllProducts(pageable);
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        return ResponseEntity.ok().header("source", "fpt-software").body(products);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable String id, @RequestBody ProductSaveDTO productSaveDTO) {
         ProductDTO productDTO = productService.updateProduct(id, productSaveDTO);
-        return ResponseEntity.ok(productDTO);
+        return ResponseEntity.ok().header("source", "fpt-software").body(productDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
         productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().header("source", "fpt-software").build();
     }
 }
