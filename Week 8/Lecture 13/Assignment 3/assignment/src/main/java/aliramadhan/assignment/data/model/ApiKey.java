@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "api_key")
+@Table(name = "api_key2")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,10 +18,12 @@ import org.hibernate.annotations.GenericGenerator;
 public class ApiKey {
 
     @Id
-    @GeneratedValue(generator = "UUID", strategy = GenerationType.AUTO)
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "key")
+    @Column(name = "apkey")
     private String key;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "last_used")
+    private LocalDateTime lastUsed;
 
     // Getters and setters
 }

@@ -7,9 +7,12 @@ import aliramadhan.assignment.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -21,30 +24,36 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductDTO> saveProduct(@RequestBody ProductSaveDTO productSaveDTO) {
         ProductDTO productDTO = productService.saveProduct(productSaveDTO);
-        return ResponseEntity.ok().header("source", "fpt-software").body(productDTO);
+        return buildResponse(productDTO);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductShowDTO> getProductById(@PathVariable String id) {
         ProductShowDTO productShowDTO = productService.getProductById(id);
-        return ResponseEntity.ok().header("source", "fpt-software").body(productShowDTO);
+        return buildResponse(productShowDTO);
     }
 
     @GetMapping
     public ResponseEntity<Page<ProductShowDTO>> getAllProducts(Pageable pageable) {
         Page<ProductShowDTO> products = productService.getAllProducts(pageable);
-        return ResponseEntity.ok().header("source", "fpt-software").body(products);
+        return buildResponse(products);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable String id, @RequestBody ProductSaveDTO productSaveDTO) {
         ProductDTO productDTO = productService.updateProduct(id, productSaveDTO);
-        return ResponseEntity.ok().header("source", "fpt-software").body(productDTO);
+        return buildResponse(productDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
         productService.deleteProduct(id);
-        return ResponseEntity.noContent().header("source", "fpt-software").build();
+        return buildResponse(null);
+    }
+
+    private <T> ResponseEntity<T> buildResponse(T body) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("timestamp", LocalDateTime.now().toString());
+        return new ResponseEntity<>(body, headers, HttpStatus.OK);
     }
 }
