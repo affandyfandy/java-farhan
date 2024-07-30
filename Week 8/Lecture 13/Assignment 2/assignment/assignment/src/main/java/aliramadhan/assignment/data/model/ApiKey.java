@@ -18,9 +18,7 @@ public class ApiKey {
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.AUTO)
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "key")
+    @Column(name = "prodkey")
     private String key;
-
-    // Getters and setters
 }
 

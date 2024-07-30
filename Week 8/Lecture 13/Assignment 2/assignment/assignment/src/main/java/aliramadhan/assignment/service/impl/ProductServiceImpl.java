@@ -33,19 +33,19 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.toProduct(productSaveDTO);
         product.setId(UUID.randomUUID().toString());
         product = productRepository.save(product);
-        return ProductMapper.INSTANCE.toProductDTO(product);
+        return productMapper.toProductDTO(product);
     }
 
     @Override
     public ProductShowDTO getProductById(String id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
-        return productMapper.toProductShowDTO(product);
+        return productMapper.toShowDTO(product);
     }
     @Override
     public  Page<ProductShowDTO> getAllProducts(Pageable pageable){
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
         Page<Product> products = productRepository.findAll(sortedPageable);
-        return products.map(productMapper::toProductShowDTO);
+        return products.map(productMapper::toShowDTO);
     }
 
     @Override
@@ -54,14 +54,11 @@ public class ProductServiceImpl implements ProductService {
         product.setName(productSaveDTO.getName());
         product.setPrice(productSaveDTO.getPrice());
         product = productRepository.save(product);
-        return ProductMapper.INSTANCE.toProductDTO(product);
+        return productMapper.toProductDTO(product);
     }
 
     @Override
     public void deleteProduct(String id) {
         productRepository.deleteById(id);
     }
-
-
-
 }

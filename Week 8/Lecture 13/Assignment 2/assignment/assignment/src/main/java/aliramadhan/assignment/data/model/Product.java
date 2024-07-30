@@ -17,10 +17,10 @@ public class Product {
     @Id
     private String id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private double price;
 }
 

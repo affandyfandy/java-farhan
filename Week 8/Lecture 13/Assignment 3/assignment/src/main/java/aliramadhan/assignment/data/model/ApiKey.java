@@ -5,12 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "api_key2")
+@Table(name = "api_key")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,7 +17,7 @@ import java.time.LocalDateTime;
 public class ApiKey {
 
     @Id
-    @Column(name = "apkey")
+    @Column(name = "prodkey")
     private String key;
     @Column(name = "username")
     private String username;
