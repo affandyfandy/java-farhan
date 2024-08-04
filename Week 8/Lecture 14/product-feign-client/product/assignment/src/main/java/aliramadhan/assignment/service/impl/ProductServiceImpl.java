@@ -11,43 +11,24 @@ import aliramadhan.assignment.mapper.ProductMapper;
 import aliramadhan.assignment.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    ProductMapper productMapper;
-
+    private ProductMapper productMapper;
 
     @Autowired
     private SupplierClient supplierClient;
 
-    //    @Override
-//    public ProductDTO saveProduct(ProductSaveDTO productSaveDTO) {
-//        Product product = productMapper.toProduct(productSaveDTO);
-//        product = productRepository.save(product);
-//        return productMapper.toProductDTO(product);
-//    }
-//
-//    @Override
-//    public ProductShowDTO getProductById(Long id) {
-//        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
-//        return productMapper.toShowDTO(product);
-//    }
     @Override
     public ProductDTO saveProduct(ProductSaveDTO productSaveDTO) {
         // Validate supplier ID
@@ -65,7 +46,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductShowDTO getProductById(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
         ProductShowDTO productShowDTO = productMapper.toShowDTO(product);
 
         // Fetch supplier information using Feign client
@@ -76,13 +58,6 @@ public class ProductServiceImpl implements ProductService {
 
         return productShowDTO;
     }
-
-//    @Override
-//    public Page<ProductShowDTO> getAllProducts(Pageable pageable) {
-//        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
-//        Page<Product> products = productRepository.findAll(sortedPageable);
-//        return products.map(productMapper::toShowDTO);
-//    }
 
     @Override
     public Page<ProductShowDTO> getAllProducts(Pageable pageable) {
@@ -132,5 +107,5 @@ public class ProductServiceImpl implements ProductService {
         // Perform the delete operation
         productRepository.deleteById(id);
     }
-
 }
+    

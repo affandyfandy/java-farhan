@@ -18,7 +18,7 @@ public class AppConfig {
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
             // Add any custom headers or modify the request here
-            requestTemplate.header("Custom-Header", "CustomHeaderValue");
+            requestTemplate.header("Header", "FPT SOFTWARE");
         };
     }
 

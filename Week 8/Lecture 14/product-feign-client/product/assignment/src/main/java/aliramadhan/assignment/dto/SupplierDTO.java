@@ -1,8 +1,7 @@
 package aliramadhan.assignment.dto;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupplierDTO {
