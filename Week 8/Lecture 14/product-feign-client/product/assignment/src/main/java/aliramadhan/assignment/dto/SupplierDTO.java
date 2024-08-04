@@ -1,0 +1,12 @@
+package aliramadhan.assignment.dto;
+import lombok.*;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SupplierDTO {
+    private Long id;
+    private String name;
+    private String contactInfo;
+    private String address;
+}
