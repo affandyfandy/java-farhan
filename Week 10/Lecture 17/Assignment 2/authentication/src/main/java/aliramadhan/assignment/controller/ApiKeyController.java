@@ -31,7 +31,7 @@ public class ApiKeyController {
         return ResponseEntity.ok(apiKeys);
     }
 
-    @GetMapping("/va    lidate")
+    @GetMapping("/validate")
     public ResponseEntity<Boolean> validateApiKey(@RequestParam String key) {
         boolean isValid = apiKeyService.isValidApiKey(key);
         return ResponseEntity.ok(isValid);

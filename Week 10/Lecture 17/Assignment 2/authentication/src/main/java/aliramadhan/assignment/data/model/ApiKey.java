@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class ApiKey {
 
     @Id
-    @Column(name = "ID", columnDefinition = "BIGINT", updatable = false, nullable = false)
+    @Column(name = "id", columnDefinition = "BIGINT", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String apiKey;
