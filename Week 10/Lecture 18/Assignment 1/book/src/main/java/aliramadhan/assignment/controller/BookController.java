@@ -6,6 +6,7 @@ import aliramadhan.assignment.dto.BookShowDTO;
 import aliramadhan.assignment.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,18 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
 
     private final BookService bookService;
+    private final Environment environment;
 
     @Autowired
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, Environment environment) {
         this.bookService = bookService;
+        this.environment = environment;
+    }
+
+    @GetMapping("/data-server")
+    public String getBookData() {
+        return "data of book-service, Running on port: "
+                + environment.getProperty("local.server.port");
     }
 
     @PostMapping
