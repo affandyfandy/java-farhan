@@ -2,234 +2,132 @@
 
 ## Detailed Overview
 
-In Spring Cloud Gateway, filters are used to modify requests and responses as they pass through the gateway. Filters can be applied globally, per route, or specifically to pre-process incoming requests or post-process outgoing responses. They are a key feature for implementing cross-cutting concerns like security, logging, and transformations.
+A discovery service in microservices architecture helps different services find and communicate with each other dynamically. Instead of hardcoding service locations (like URLs), the discovery service keeps track of all registered services and their instances. This allows services to discover others based on logical names rather than exact network addresses.
 
-## Types of Filters:
+### Key Components:
 
-- Global Filters:
+- **Service Registry:** A central database where all service instances register themselves, usually with details like service name, IP address, and port.
+- **Service Discovery:** The process where a service queries the registry to find the address of another service it needs to communicate with.
 
-Applied to all routes.
-Useful for tasks like global logging, security checks, or error handling.
-Example: A global filter that adds a custom header to all responses.
+### Common Implementations:
 
-- Pre-filters:
+- **Eureka** (by Netflix): Often used in Spring Boot projects.
+- **Consul:** Offers service discovery, configuration, and health monitoring.
+- **Zookeeper:** Originally designed for distributed systems coordination, also used for service discovery.
 
-Executed before the request is routed to the backend service.
-Used for tasks like authentication, request logging, modifying headers, or rate limiting.
-Example: A pre-filter that checks for an API key in the request header.
-
-- Post-filters:
-
-Executed after the request has been routed and a response is received.
-Used for modifying the response, adding headers, or logging the response data.
-Example: A post-filter that adds a response time header to the response.
-
-- Custom Filters:
-
-You can create custom filters by implementing the GatewayFilter interface for route-specific filters or the GlobalFilter interface for global filters.
-Custom filters allow you to define specific logic tailored to your application's needs.
-Ordering Filters:
-Filters can be ordered to control their execution sequence, ensuring that critical filters run before or after others.
-
-## Example Use Cases:
-
-- Security: Validate authentication tokens or API keys.
-- Logging: Track request and response data for monitoring and debugging.
-- Traffic Management: Implement rate limiting or circuit breaking to manage traffic load.
-
-Filters in Spring Cloud Gateway are powerful tools that give you fine-grained control over how requests and responses are processed as they move through the gateway.
+In essence, a discovery service helps maintain flexibility and scalability in a microservices environment by enabling services to discover each other dynamically, even as they scale up or down.
 
 `This is example implementation`:
 
-## Setting Up Spring Cloud Gateway Project with Filter
+## 1. Setting Up Spring Discovery Service (Eureka Server)
 
-Create new spring project for authentication service. Add the necessary dependencies in the pom.xml:
+In this case i use Spring Cloud Netflix Eureka as the discovery service.
+
+- Add dependencies
 
 ```xml
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-devtools</artifactId>
-        <scope>runtime</scope>
-        <optional>true</optional>
-        </dependency>
-    <dependency>
-    <groupId>com.mysql</groupId>
-        <artifactId>mysql-connector-j</artifactId>
-        <scope>runtime</scope>
-    </dependency>
+  <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+  </dependency>
 ```
 
-## Create the all components project of authentication service
-
-This example components:
-`Entity`  
-Here is the detail of [ApiKey](./authentication/src/main/java/aliramadhan/assignment/data/model/ApiKey.java)
+- Configure Eureka Server on main application
 
 ```java
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "api_key")
-public class ApiKey {
+@SpringBootApplication
+@EnableEurekaServer
+public class DiscoveryApplication {
 
-    @Id
-    @Column(name = "id", columnDefinition = "BIGINT", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String apiKey;
-    private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private boolean active;
-}
-```
-
-`Repository`
-Here is the detail of [Repository](./authentication/src/main/java/aliramadhan/assignment/data/repository/ApiKeyRepository.java)
-
-```java
-package aliramadhan.assignment.data.repository;
-
-import java.util.Optional;
-
-import aliramadhan.assignment.data.model.ApiKey;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-
-@Repository
-public interface ApiKeyRepository extends JpaRepository<ApiKey, Long> {
-
-    // Get the first API key, order by ID
-    Optional<ApiKey> findFirstByOrderById();
-
-    // Find the first active API key
-    Optional<ApiKey> findFirstByActiveTrueOrderById();
-}
-```
-
-`Service Interface`
-Here is the detail of [Service Interface](./authentication/src/main/java/aliramadhan/assignment/service/ApiKeyService.java)
-
-```java
-package aliramadhan.assignment.service;
-
-import aliramadhan.assignment.data.model.ApiKey;
-
-import java.util.List;
-
-public interface ApiKeyService {
-
-    List<ApiKey> getAll();
-
-    // Validates if the provided API key is valid and active
-    boolean isValidApiKey(String requestApiKey);
-}
-
-```
-
-`Service Implementation`
-Here is the detail of [Service Implementation](./authentication/src/main/java/aliramadhan/assignment/service/impl/ApiKeyServiceImpl.java)
-
-```java
-@Service
-public class ApiKeyServiceImpl implements ApiKeyService {
-
-    private final ApiKeyRepository apiKeyRepository;
-
-    @Autowired
-    public ApiKeyServiceImpl(ApiKeyRepository apiKeyRepository) {
-        this.apiKeyRepository = apiKeyRepository;
-    }
-
-    @Override
-    public List<ApiKey> getAll() {
-        // Return the list of all ApiKey entities from the repository
-        return apiKeyRepository.findAll();
-    }
-
-    @Override
-    public boolean isValidApiKey(String requestApiKey) {
-        // Check from the repo
-        Optional<ApiKey> apiKeyOpt = apiKeyRepository.findFirstByActiveTrueOrderById();
-        if (apiKeyOpt.isPresent()) {
-            // Check if it's the same
-            String storedApiKey = apiKeyOpt.get().getApiKey();
-            return storedApiKey.equals(requestApiKey);
-        }
-        return false;
-    }
-}
-
-```
-
-`Controller`
-Here is the detail of [Controller](./authentication/src/main/java/aliramadhan/assignment/controller/ApiKeyController.java)
-
-```java
-@RestController
-@RequestMapping("/api/v1/auth")
-@Validated
-public class ApiKeyController {
-
-    private final ApiKeyService apiKeyService;
-
-    @Autowired
-    public ApiKeyController(ApiKeyService apiKeyService) {
-        this.apiKeyService = apiKeyService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ApiKey>> getAllApiKeys() {
-        List<ApiKey> apiKeys = apiKeyService.getAll();
-        return ResponseEntity.ok(apiKeys);
-    }
-
-    @GetMapping("/validate")
-    public ResponseEntity<Boolean> validateApiKey(@RequestParam String key) {
-        boolean isValid = apiKeyService.isValidApiKey(key);
-        return ResponseEntity.ok(isValid);
+    public static void main(String[] args) {
+        SpringApplication.run(DiscoveryApplication.class, args);
     }
 }
 ```
 
-## Configure Gateway Service with Filter
+- Add configure into `application.properties`
 
-This example implementation:
-`ApiKeyConfig`
-Here is the detail of [ApiKeyConfig](./gateway/src/main/java/aliramadhan/gateway/config/ApiKeyConfig.java)
+```properties
+# Eureka setup
+server.port=8761
+
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+eureka.client.service-url.defaultZone = http://localhost:8761
+```
+
+## 2. Setting Up for Service Client (Eureka Client)
+
+Each microservice needs to register itself with the Eureka Server so that it can be discovered by other services.
+
+- Add dependencies
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+```
+
+- Configure Eureka Client on main application
 
 ```java
-package aliramadhan.gateway.config;
+@SpringBootApplication
+@EnableDiscoveryClient
+public class DiscoveryApplication {
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.context.annotation.Configuration;
-
-@Setter
-@Getter
-@Configuration
-public class ApiKeyConfig {
-private String apiKeyHeaderName = "api-key";
-private String authServiceUrl = "http://localhost:8084/api/v1/auth/validate";
+    public static void main(String[] args) {
+        SpringApplication.run(DiscoveryApplication.class, args);
+    }
 }
 ```
 
-`ApiKeyFilter`
-Here is the detail of [ApiKeyConfig](./gateway/src/main/java/aliramadhan/gateway/filter/ApiKeyFilter.java)
+- Add configure into `application.properties`
 
-Configure `Application.yaml`
-Here is the detail of [ApplicationYaml](./gateway/src/main/resources/application.yaml)
+```properties
+# Eureka setup
+eureka.client.service-url.default-zone=http://localhost:8761/eureka
+```
+
+Repeat similar steps for other service client (e.g., book-service, etc.),
+
+## Setup discovery-client for Service communication
+
+Once microservices are registered with Eureka, Spring Cloud's DiscoveryClient can be used to dynamically discover and access other registered services.
+
+In this case using `feign client`
+
+```java
+
+@FeignClient(name = "student-book", url = "http://localhost:8087/api/v1", configuration = AppConfig.class)
+public interface BookClient {
+
+    @GetMapping("/books/{id}")
+    BookDTO getBookById(@PathVariable("id") String id);
+
+    @PutMapping("/books/{id}/reduce-copies")
+    String reduceAvailableCopies(
+            @PathVariable String id,
+            @RequestParam Integer quantity);
+
+
+}
+```
+
+## 4. Integrating the gateway with discovery service
+
+- Add configure into `application.properties`
+
+```properties
+spring.application.name=gateway-service
+
+eureka.client.service-url.default-zone=http://localhost:8761/eureka
+
+spring.cloud.gateway.discovery.locator.enabled=true
+spring.cloud.gateway.discovery.locator.lower-case-service-id=true
+```
+
+- add configure into `application.yaml`
 
 ```yaml
 server:
@@ -242,24 +140,14 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: books-service
-          uri: http://localhost:8087
+        - id: book-service
+          uri: lb://book-service ## replace from uri: http://localhost:8087
           predicates:
             - Path=/api/v1/books/**
-          filters:
-            - name: ApiKeyFilter
-              args:
-                apiKeyHeaderName: api-key
-                authServiceUrl: http://localhost:8084/api/v1/auth/validate
-        - id: student-service
-          uri: http://localhost:8086
+        - id: student-book
+          uri: lb://student-book ## replace uri: http://localhost:8086
           predicates:
             - Path=/api/v1/**
-          filters:
-            - name: ApiKeyFilter
-              args:
-                apiKeyHeaderName: api-key
-                authServiceUrl: http://localhost:8084/api/v1/auth/validate
 
 management:
   endpoints:
@@ -268,14 +156,28 @@ management:
         include: "*"
 ```
 
-### _Notes_ :
-
-`books-service` Route: Maps all requests with /api/v1/books/\*\* to the Books service running on port 8087 with api-key filter.
-`student-service` Route : Maps all requests with /api/v1/\*\* to the Student service running on port 8086 with api-key filter.
-
-This implementation securely controls access to microservices by verifying an "api-key" through Spring Cloud Gateway. The centralized management of API keys in the Authentication service simplifies the maintenance and updating of keys as needed.
-
 ## Project Structure and Query Data
+
+### `Discovery-Service`
+
+`Project Structure`
+
+```bash
+gateway
+├── .mvn/wrapper/
+│   └── maven-wrapper.properties
+├── src/main/
+│   ├── java/com/example/discover/
+│   │   └── GatewayApplication.java
+│   └── resources/
+│       └── application.properties
+├── .gitignore
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── run.bat
+└── run.sh
+```
 
 ### `Authentication-Service`
 
@@ -389,7 +291,7 @@ product
 ├── pom.xml
 ```
 
-### `DDL and DML Book-Service`
+`DDL and DML Book-Service`
 
 ```sql
 CREATE TABLE book (
@@ -466,7 +368,7 @@ product
 ├── pom.xml
 ```
 
-### `DDL and DML Student-Service`
+`DDL and DML Student-Service`
 
 ```sql
 
@@ -507,12 +409,27 @@ VALUES
 
 ```
 
-
 ## Some Documentation Result
 
+### Before use Discovery Service
+
 1. Gateway Service Valid
-   ![gateway-service 1](./assets/valid.png)
+   ![gateway-service 1](./assets/images/before/valid.png)
 2. Gateway Service Invalid 1
-   ![gateway-service 2](./assets/invalid.png)
+   ![gateway-service 2](./assets/images/before/invalid.png)
 3. Gateway Service Invalid 2
-   ![gateway-service 3](./assets/blank.png)
+   ![gateway-service 3](./assets/images/before/blank.png)
+
+### After use Discovery Service
+
+1. Gateway Service Valid Books All
+   ![gateway-service valid after 1](./assets/images/after/valid.png)
+2. Gateway Service Invalid 1
+   ![gateway-service after 2](./assets/images/after/invalid.png)
+3. Gateway Service Invalid 2
+   ![gateway-service after 3](./assets/images/after/missing.png)
+
+### Eureka
+
+- Eureka Server
+  ![eureka-service after 1](./assets/images/eureka.png)

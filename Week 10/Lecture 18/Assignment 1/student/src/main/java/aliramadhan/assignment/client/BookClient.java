@@ -18,6 +18,4 @@ public interface BookClient {
     String reduceAvailableCopies(
             @PathVariable String id,
             @RequestParam Integer quantity);
-
-
 }
