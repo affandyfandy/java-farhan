@@ -4,15 +4,16 @@ import aliramadhan.gateway.config.ApiKeyConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 @Component
 public class ApiKeyFilter extends AbstractGatewayFilterFactory<ApiKeyConfig> {
-
 
     private final WebClient.Builder webClientBuilder;
 
@@ -26,12 +27,10 @@ public class ApiKeyFilter extends AbstractGatewayFilterFactory<ApiKeyConfig> {
     public GatewayFilter apply(ApiKeyConfig config) {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
-            HttpHeaders headers = request.getHeaders();
-            String apiKey = headers.getFirst(config.getApiKeyHeaderName());
+            String apiKey = request.getHeaders().getFirst(config.getApiKeyHeaderName());
 
             if (apiKey == null || apiKey.isEmpty()) {
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                return exchange.getResponse().setComplete();
+                return onError(exchange, "API key is missing");
             }
 
             return webClientBuilder.build()
@@ -39,14 +38,14 @@ public class ApiKeyFilter extends AbstractGatewayFilterFactory<ApiKeyConfig> {
                     .uri(config.getAuthServiceUrl() + "?key=" + apiKey)
                     .retrieve()
                     .bodyToMono(Boolean.class)
-                    .flatMap(isValid -> {
-                        if (Boolean.TRUE.equals(isValid)) {
-                            return chain.filter(exchange);
-                        } else {
-                            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                            return exchange.getResponse().setComplete();
-                        }
-                    });
+                    .flatMap(isValid -> isValid ? chain.filter(exchange) : onError(exchange, "Invalid API key"));
         };
+    }
+
+    private Mono<Void> onError(ServerWebExchange exchange, String errorMsg) {
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+        exchange.getResponse().getHeaders().setContentType(MediaType.TEXT_PLAIN);
+        return exchange.getResponse()
+                .writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(errorMsg.getBytes())));
     }
 }
