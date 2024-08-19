@@ -1,0 +1,26 @@
+server:
+  port: 8085  # Gateway server port
+
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      routes:
+        - id: book-service
+          #          uri: http://localhost:8087
+          uri: lb://book-service
+          predicates:
+            - Path=/api/v1/books/**
+        - id: student-book
+          #          uri: http://localhost:8086
+          uri: lb://student-book
+          predicates:
+            - Path=/api/v1/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
