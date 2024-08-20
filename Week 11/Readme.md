@@ -110,3 +110,6 @@ $primary-hover-color: #0056b3;
 4. **Partials**: Organize styles into smaller, maintainable files.
 
 In conclusion, while CSS is the base for styling, SCSS and SASS offer more powerful features for larger and more complex projects.
+
+<!-- Run Server Json -->
+<!-- npx json-server --watch db.json -->
