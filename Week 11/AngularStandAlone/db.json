@@ -1,0 +1,18 @@
+{
+  "customers": [
+    {
+      "id": "a3c5e37a-14d5-4f9c-b845-55ff8a9b8f5a",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "phone": "123-456-7890"
+    },
+    {
+      "id": "8c1b2b62-2d41-49d3-bb48-49d4c7dbee30",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane.smith@example.com",
+      "phone": "987-654-3210"
+    }
+  ]
+}
