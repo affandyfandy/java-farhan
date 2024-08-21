@@ -2,17 +2,24 @@
   "customers": [
     {
       "id": "a3c5e37a-14d5-4f9c-b845-55ff8a9b8f5a",
-      "firstName": "John",
+      "firstName": "John update",
       "lastName": "Doe",
       "email": "john.doe@example.com",
       "phone": "123-456-7890"
     },
     {
       "id": "8c1b2b62-2d41-49d3-bb48-49d4c7dbee30",
-      "firstName": "Jane",
+      "firstName": "Jane update",
       "lastName": "Smith",
       "email": "jane.smith@example.com",
       "phone": "987-654-3210"
+    },
+    {
+      "id": "b9f8395b-aac4-40d7-88b5-e69c1f2e8e9e",
+      "firstName": "Customer 1",
+      "lastName": "Customer 2 ",
+      "email": "cust@gmail.com",
+      "phone": "089524321234"
     }
   ]
 }
