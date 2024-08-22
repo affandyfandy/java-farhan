@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Customer } from '../../../../core/interfaces/customers.type';
 import { CustomerService } from '../../../../service/customers.service';
 import { FormsModule } from '@angular/forms';
-import { ModalCustomerComponent } from '../../../../shared/components/modal-customer/modal-customer.component';
+import { ModalCustomerComponent } from '../../../../main/components/modal-customer/modal-customer.component';
 
 @Component({
   selector: 'app-list-customers',

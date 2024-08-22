@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Customers, Customer } from '../core/interfaces/customers.type';
 import { map } from 'rxjs/operators';
+import { AppConstants } from '../config/app.constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
-  private apiUrl = 'http://localhost:3000/customers'; // Express API endpoint
+  private apiUrl = `${AppConstants.BASE_API_URL}/customers`; // Express API endpoint
 
   constructor(private http: HttpClient) {}
 

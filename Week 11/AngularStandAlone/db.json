@@ -50,5 +50,28 @@
       "createdAt": "2024-08-18T15:45:00",
       "updatedAt": "2024-08-19T08:30:00"
     }
+  ],
+  "users": [
+    {
+      "id": "u1234567-a89b-123c-d456-7890f12g3456",
+      "username": "user1",
+      "email": "user1@example.com",
+      "password": "securepassword1",
+      "gender": "male"
+    },
+    {
+      "id": "u2345678-b89c-234d-e567-8901g23h4567",
+      "username": "user2",
+      "email": "user2@example.com",
+      "password": "securepassword2",
+      "gender": "female"
+    },
+    {
+      "id": "u3456789-c90d-345e-f678-9012h34i5678",
+      "username": "user3",
+      "email": "user3@example.com",
+      "password": "securepassword3",
+      "gender": "male"
+    }
   ]
 }
