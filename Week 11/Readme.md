@@ -242,7 +242,7 @@ ng generate component modules/home/components/home -->
 <!-- sub home -->
 <!-- ng generate component modules/home/components/about-us -->
 
-<!-- home module -->
+<!-- customer module -->
 <!-- ng generate module modules/customers --routing -->
 
 <!-- sub customer-->

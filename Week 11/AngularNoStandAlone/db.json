@@ -21,5 +21,34 @@
       "email": "last@gmail.com",
       "phone": "084212341234"
     }
+  ],
+  "products": [
+    {
+      "id": "a1234567-b89c-123d-e456-7890f12g3456",
+      "name": "Product A",
+      "price": 19.99,
+      "status": "active",
+      "quantity": 100,
+      "createdAt": "2024-08-22T10:30:00",
+      "updatedAt": "2024-08-22T10:30:00"
+    },
+    {
+      "id": "b2345678-c89d-234e-f567-8901g23h4567",
+      "name": "Product B",
+      "price": 29.99,
+      "status": "deactive",
+      "quantity": 50,
+      "createdAt": "2024-08-20T09:00:00",
+      "updatedAt": "2024-08-21T12:00:00"
+    },
+    {
+      "id": "c3456789-d90e-345f-g678-9012h34i5678",
+      "name": "Product C",
+      "price": 15.49,
+      "status": "active",
+      "quantity": 200,
+      "createdAt": "2024-08-18T15:45:00",
+      "updatedAt": "2024-08-19T08:30:00"
+    }
   ]
 }
