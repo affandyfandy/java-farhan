@@ -72,6 +72,13 @@
       "email": "user3@example.com",
       "password": "securepassword3",
       "gender": "male"
+    },
+    {
+      "id": "189ae80e-5860-4d93-b926-828176ccdd11",
+      "username": "user 3",
+      "email": "user3@gmail.com",
+      "password": "user12345",
+      "gender": "male"
     }
   ]
 }

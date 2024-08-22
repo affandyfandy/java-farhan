@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   // Method for registering a new user
-  register(user: Omit<User, 'id'>): Observable<User> {
+  register(user: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, user);
   }
 }
