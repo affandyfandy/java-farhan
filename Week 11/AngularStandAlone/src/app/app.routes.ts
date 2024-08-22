@@ -20,6 +20,13 @@ export const routes: Routes = [
       import('./modules/auth/auth.module').then((m) => m.AuthModule), // Lazy loading AuthModule
   },
   {
+    path: 'products',
+    loadChildren: () =>
+      import('./modules/products/products.module').then(
+        (m) => m.ProductsModule
+      ), // Lazy loading AuthModule
+  },
+  {
     path: '**',
     redirectTo: '',
   },
