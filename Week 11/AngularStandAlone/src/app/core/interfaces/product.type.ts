@@ -4,7 +4,7 @@ export interface Product {
   id?: string | undefined;
   name: string;
   price: number | undefined;
-  status: string | undefined;
+  status: Status | undefined;
   quantity: number | undefined;
   createdAt: string | null;
   updatedAt: string | null;
