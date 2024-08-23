@@ -66,7 +66,3 @@ export class ProductService {
     );
   }
 }
-
-// this.customerService.getProducts('price', 'asc', 1, 10).subscribe((products) => {
-//   console.log(products);
-// });

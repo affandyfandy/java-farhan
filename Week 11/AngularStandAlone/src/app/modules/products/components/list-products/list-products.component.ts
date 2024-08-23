@@ -3,19 +3,24 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { ProductService } from '../../../../service/product.service';
 import { Product } from '../../../../core/interfaces/product.type';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-list-products',
   standalone: true,
-  imports: [AgGridAngular],
+  imports: [AgGridAngular, DatePipe],
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.css'],
+  providers: [DatePipe], // Add DatePipe here
 })
 export class ListProductsComponent implements OnInit {
   products: Product[] = [];
   rowData: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -29,8 +34,8 @@ export class ListProductsComponent implements OnInit {
         price: product.price,
         status: product.status,
         quantity: product.quantity,
-        createdAt: product.createdAt,
-        updatedAt: product.updatedAt,
+        createdAt: this.datePipe.transform(product.createdAt, 'fullDate'),
+        updatedAt: this.datePipe.transform(product.updatedAt, 'fullDate'),
       }));
     });
   }

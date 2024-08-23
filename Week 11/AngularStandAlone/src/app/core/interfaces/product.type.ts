@@ -3,9 +3,9 @@ import { Status } from './status.type';
 export interface Product {
   id?: string | undefined;
   name: string;
-  price?: number;
-  status?: Status;
-  quantity?: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+  price: number | undefined;
+  status: string | undefined;
+  quantity: number | undefined;
+  createdAt: string | null;
+  updatedAt: string | null;
 }
