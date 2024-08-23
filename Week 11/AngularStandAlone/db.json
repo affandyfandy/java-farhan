@@ -24,15 +24,6 @@
   ],
   "products": [
     {
-      "id": "a1234567-b89c-123d-e456-7890f12g3456",
-      "name": "Product A",
-      "price": 19.99,
-      "status": "active",
-      "quantity": 100,
-      "createdAt": "2024-08-22T10:30:00",
-      "updatedAt": "2024-08-22T10:30:00"
-    },
-    {
       "id": "b2345678-c89d-234e-f567-8901g23h4567",
       "name": "Product B",
       "price": 29.99,
@@ -49,24 +40,6 @@
       "quantity": 200,
       "createdAt": "2024-08-18T15:45:00",
       "updatedAt": "2024-08-19T08:30:00"
-    },
-    {
-      "id": "6f8f50ab-88cd-4f19-8463-4efb5c124094",
-      "name": "product d",
-      "price": 200,
-      "status": "1",
-      "quantity": 400,
-      "createdAt": "2024-08-23T09:27:00.218Z",
-      "updatedAt": "2024-08-23T09:27:00.218Z"
-    },
-    {
-      "id": "eb607526-02a7-4f9c-8c88-b6e77a9d57e2",
-      "name": "Product E",
-      "price": 200,
-      "status": "1",
-      "quantity": 20,
-      "createdAt": "2024-08-23T09:33:14.783Z",
-      "updatedAt": "2024-08-23T09:33:14.783Z"
     },
     {
       "id": "fad6d731-c2aa-4d61-9327-29a981f0143c",

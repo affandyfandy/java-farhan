@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
+import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { ProductService } from '../../../../service/product.service';
 import { Product } from '../../../../core/interfaces/product.type';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ListProductsActionComponent } from '../../../../main/components/list-products-action/list-products-action.component';
 
 @Component({
   selector: 'app-list-products',
   standalone: true,
-  imports: [AgGridAngular, DatePipe, FormsModule],
+  imports: [
+    AgGridModule,
+    AgGridAngular,
+    DatePipe,
+    FormsModule,
+    ListProductsActionComponent,
+  ], // Make sure to include ListProductsActionComponent here
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.css'],
   providers: [DatePipe],
@@ -26,6 +33,14 @@ export class ListProductsComponent implements OnInit {
     { field: 'quantity', headerName: 'Quantity' },
     { field: 'createdAt', headerName: 'Created At' },
     { field: 'updatedAt', headerName: 'Updated At' },
+    {
+      headerName: 'Actions',
+      field: 'action',
+      cellRenderer: ListProductsActionComponent,
+      cellRendererParams: {
+        context: this,
+      },
+    },
   ];
 
   constructor(
@@ -61,12 +76,22 @@ export class ListProductsComponent implements OnInit {
 
   updateRowData(products: Product[]): void {
     this.rowData = products.map((product) => ({
-      name: product.name,
-      price: product.price,
-      status: product.status,
-      quantity: product.quantity,
+      ...product,
       createdAt: this.datePipe.transform(product.createdAt, 'fullDate'),
       updatedAt: this.datePipe.transform(product.updatedAt, 'fullDate'),
     }));
+  }
+
+  deleteProduct(id: string): void {
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        this.loadProducts(); // Reload products after deletion
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  openProduct(product: Product): void {
+    // Implement logic to open the product details, if needed
   }
 }
