@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppConstants } from '../config/app.constants';
@@ -8,14 +8,29 @@ import { Products } from '../core/interfaces/product.type';
 @Injectable({
   providedIn: 'root',
 })
-export class CustomerService {
+export class ProductService {
   private apiUrl = `${AppConstants.BASE_API_URL}/products`; // Express API endpoint
 
   constructor(private http: HttpClient) {}
 
   // Get all products
-  getProducts(): Observable<Product[]> {
+  getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
+  }
+
+  getProducts(
+    sortBy: 'name' | 'price' = 'name',
+    sortOrder: 'asc' | 'desc' = 'asc',
+    page: number = 1,
+    limit: number = 10
+  ): Observable<Product[]> {
+    const params = new HttpParams()
+      .set('_sort', sortBy)
+      .set('_order', sortOrder)
+      .set('_page', page.toString())
+      .set('_limit', limit.toString());
+
+    return this.http.get<Product[]>(this.apiUrl, { params });
   }
 
   // Get a single product by ID
@@ -52,3 +67,7 @@ export class CustomerService {
     );
   }
 }
+
+// this.customerService.getProducts('price', 'asc', 1, 10).subscribe((products) => {
+//   console.log(products);
+// });

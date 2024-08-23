@@ -246,15 +246,21 @@ ng generate component modules/home/components/home -->
 <!-- ng generate module modules/customers --routing -->
 
 <!-- sub customer-->
-<!-- ng generate component modules/customers/components/list-customers -->
-<!-- ng generate component modules/customers/components/create-customers -->
-<!-- ng generate component modules/customers/components/edit-customers -->
+<!-- ng generate component modules/customers/components/list-customers
+ng generate component modules/customers/components/create-customers
+ng generate component modules/customers/components/edit-customers -->
 
 <!-- auth module -->
 <!-- ng generate module modules/auth --routing -->
 
 <!-- sub auth module -->
 <!-- ng generate component modules/auth/components/signin -->
+
+<!--
+  pipe
+  ng generate p core/pipe/phone
+-->
+
 <!--
 onchange is press enter
 ngmodel is press click
