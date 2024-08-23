@@ -5,11 +5,18 @@ import { Customer } from '../../../../core/interfaces/customers.type';
 import { CustomerService } from '../../../../service/customers.service';
 import { FormsModule } from '@angular/forms';
 import { ModalCustomerComponent } from '../../../../main/components/modal-customer/modal-customer.component';
+import { PhonePipe } from '../../../../core/pipe/phone.pipe';
 
 @Component({
   selector: 'app-list-customers',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule, ModalCustomerComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    ModalCustomerComponent,
+    PhonePipe,
+  ],
   templateUrl: './list-customers.component.html',
   styleUrls: ['./list-customers.component.css'],
 })
