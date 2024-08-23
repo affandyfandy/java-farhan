@@ -3,8 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppConstants } from '../config/app.constants';
-import { Product } from '../core/model/product.model';
-import { Products } from '../core/interfaces/product.type';
+import { Product } from '../core/interfaces/product.type';
 @Injectable({
   providedIn: 'root',
 })
@@ -58,8 +57,8 @@ export class ProductService {
     return this.http.delete(this.apiUrl);
   }
 
-  findByName(name: string): Observable<Products[]> {
-    return this.http.get<Products[]>(this.apiUrl).pipe(
+  findByName(name: string): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl).pipe(
       map((products) => {
         const regex = new RegExp(name, 'i'); // 'i' for case-insensitive search
         return products.filter((product) => regex.test(product.name));

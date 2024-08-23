@@ -1,11 +1,11 @@
 import { Status } from './status.type';
 
-export interface Products {
-  id: string;
+export interface Product {
+  id?: string | undefined;
   name: string;
-  price: number;
-  status: Status;
-  quantity: number;
-  createdAt: string;
-  updatedAt: string;
+  price?: number;
+  status?: Status;
+  quantity?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
