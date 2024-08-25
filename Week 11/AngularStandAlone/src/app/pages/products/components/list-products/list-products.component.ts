@@ -5,10 +5,10 @@ import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { ProductService } from '../../../../service/product.service';
 import { Product } from '../../../../core/interfaces/product.type';
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ListProductsActionComponent } from '../../../../main/components/list-products-action/list-products-action.component';
 import { Status } from '../../../../core/interfaces/status.type';
+import { ListProductsActionComponent } from '../../../../main/components/list-products-action/list-products-action.component';
 import { ModalProductComponent } from '../../../../main/components/modal-product/modal-product.component';
 
 @Component({
@@ -17,14 +17,13 @@ import { ModalProductComponent } from '../../../../main/components/modal-product
   imports: [
     AgGridModule,
     AgGridAngular,
-    DatePipe,
     FormsModule,
     ListProductsActionComponent,
     ModalProductComponent,
   ],
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.css'],
-  providers: [DatePipe],
+  providers: [CurrencyPipe, DatePipe],
 })
 export class ListProductsComponent implements OnInit {
   products: Product[] = [];
@@ -62,7 +61,8 @@ export class ListProductsComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private currencyPipe: CurrencyPipe
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +93,12 @@ export class ListProductsComponent implements OnInit {
   updateRowData(products: Product[]): void {
     this.rowData = products.map((product) => ({
       ...product,
+      price: this.currencyPipe.transform(
+        product.price,
+        'USD',
+        'symbol-narrow',
+        '1.2-2'
+      ),
       createdAt: this.datePipe.transform(product.createdAt, 'fullDate'),
       updatedAt: this.datePipe.transform(product.updatedAt, 'fullDate'),
     }));

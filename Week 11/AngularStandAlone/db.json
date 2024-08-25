@@ -27,7 +27,7 @@
       "id": "c3456789-d90e-345f-g678-9012h34i5678",
       "name": "Product C Update",
       "price": 15.49,
-      "status": "Active",
+      "status": "Deactive",
       "quantity": 200,
       "createdAt": "2024-08-18T15:45:00",
       "updatedAt": "2024-08-25T16:14:25.998Z"

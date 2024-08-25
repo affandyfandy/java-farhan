@@ -230,6 +230,7 @@ Understanding these hooks allows for better control over the component's behavio
 Reference
 [angular docs](https://angular.dev/guide/components/lifecycle#ngoninit)
 
+
 <!-- Run Server Json -->
 <!-- npx json-server --watch db.json -->
 <!-- ng generate component shared/components/header
@@ -259,6 +260,7 @@ ng generate component modules/customers/components/edit-customers -->
 <!--
   pipe
   ng generate p core/pipe/phone
+  ref https://medium.com/@aqeelabbas3972/pipes-in-angular-6a871589299d
 -->
 
 <!--
