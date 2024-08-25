@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-notfound',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  templateUrl: './notfound.component.html',
+  styleUrl: './notfound.component.css',
 })
-export class HeaderComponent {}
+export class NotfoundComponent {}
