@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppConstants } from '../config/app.constants';
 import { Product } from '../core/interfaces/product.type';
+import { Status } from '../core/interfaces/status.type';
 @Injectable({
   providedIn: 'root',
 })
@@ -64,5 +65,9 @@ export class ProductService {
         return products.filter((product) => regex.test(product.name));
       })
     );
+  }
+
+  updateProductStatus(id: string, status: Status): Observable<Product> {
+    return this.http.patch<Product>(`${this.apiUrl}/${id}`, { status });
   }
 }

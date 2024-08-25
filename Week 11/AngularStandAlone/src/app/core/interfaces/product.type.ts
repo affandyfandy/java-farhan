@@ -1,11 +1,12 @@
+// Product model file (e.g., product.model.ts)
 import { Status } from './status.type';
 
 export interface Product {
-  id?: string | undefined;
+  id?: string;
   name: string;
-  price: number | undefined;
-  status: Status | undefined;
-  quantity: number | undefined;
+  price: number;
+  status: Status;
+  quantity: number;
   createdAt: string | null;
   updatedAt: string | null;
 }

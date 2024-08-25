@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+// list-products.component.ts
+
+import { Component, OnInit, Input } from '@angular/core';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { ProductService } from '../../../../service/product.service';
@@ -6,6 +8,8 @@ import { Product } from '../../../../core/interfaces/product.type';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ListProductsActionComponent } from '../../../../main/components/list-products-action/list-products-action.component';
+import { Status } from '../../../../core/interfaces/status.type';
+import { ModalProductComponent } from '../../../../main/components/modal-product/modal-product.component';
 
 @Component({
   selector: 'app-list-products',
@@ -16,7 +20,8 @@ import { ListProductsActionComponent } from '../../../../main/components/list-pr
     DatePipe,
     FormsModule,
     ListProductsActionComponent,
-  ], // Make sure to include ListProductsActionComponent here
+    ModalProductComponent,
+  ],
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.css'],
   providers: [DatePipe],
@@ -25,6 +30,17 @@ export class ListProductsComponent implements OnInit {
   products: Product[] = [];
   rowData: Product[] = [];
   productName = '';
+  currentProduct: Product = {
+    id: '',
+    name: '',
+    price: 0,
+    status: Status.Active,
+    quantity: 0,
+    createdAt: null,
+    updatedAt: null,
+  };
+  currentIndex = -1;
+  @Input() isOpenModal = false;
 
   colDefs: ColDef[] = [
     { field: 'name', headerName: 'Product Name' },
@@ -40,6 +56,7 @@ export class ListProductsComponent implements OnInit {
       cellRendererParams: {
         context: this,
       },
+      minWidth: 350,
     },
   ];
 
@@ -68,7 +85,6 @@ export class ListProductsComponent implements OnInit {
       next: (data) => {
         this.products = data;
         this.updateRowData(this.products);
-        console.log('data', data);
       },
       error: (e) => console.error(e),
     });
@@ -91,7 +107,32 @@ export class ListProductsComponent implements OnInit {
     });
   }
 
-  openProduct(product: Product): void {
-    // Implement logic to open the product details, if needed
+  setActiveProduct(product: Product, index: number): void {
+    this.isOpenModal = true;
+    this.currentProduct = product;
+    this.currentIndex = index;
+    console.log('Modal opened for product ID:', product.id);
+  }
+
+  onCloseModal(): void {
+    this.isOpenModal = false;
+  }
+
+  onProductUpdated(): void {
+    this.loadProducts();
+  }
+
+  updateProductStatus(id: string, currentStatus: Status): void {
+    // Determine new status
+    const newStatus =
+      currentStatus === Status.Active ? Status.Deactive : Status.Active;
+
+    this.productService.updateProductStatus(id, newStatus).subscribe({
+      next: (updatedProduct) => {
+        console.log('Product status updated successfully:', updatedProduct);
+        this.loadProducts(); // Refresh the product list
+      },
+      error: (e) => console.error('Error updating product status:', e),
+    });
   }
 }

@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve --port=8001",
+    "dev:data": "npx json-server db.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
