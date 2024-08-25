@@ -39,6 +39,8 @@ export class ListProductsComponent implements OnInit {
     updatedAt: null,
   };
   currentIndex = -1;
+  public paginationPageSize = 10;
+  public paginationPageSizeSelector: number[] | boolean = [10, 25, 50];
   @Input() isOpenModal = false;
 
   colDefs: ColDef[] = [

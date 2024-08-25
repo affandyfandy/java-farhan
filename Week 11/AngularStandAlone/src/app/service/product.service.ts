@@ -18,21 +18,6 @@ export class ProductService {
     return this.http.get<Product[]>(this.apiUrl);
   }
 
-  getProducts(
-    sortBy: 'name' | 'price' = 'name',
-    sortOrder: 'asc' | 'desc' = 'asc',
-    page: number = 1,
-    limit: number = 10
-  ): Observable<Product[]> {
-    const params = new HttpParams()
-      .set('_sort', sortBy)
-      .set('_order', sortOrder)
-      .set('_page', page.toString())
-      .set('_limit', limit.toString());
-
-    return this.http.get<Product[]>(this.apiUrl, { params });
-  }
-
   // Get a single product by ID
   getProduct(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
