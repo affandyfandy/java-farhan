@@ -22,7 +22,7 @@ export const routes: Routes = [
   {
     path: 'products',
     loadChildren: () =>
-      import('./pages/products/products.routes').then((m) => m.productRoutes), // Lazy loading AuthModule
+      import('./pages/products/products.routes').then((m) => m.productRoutes), // Lazy loading Product Routes
   },
   {
     path: '**',
