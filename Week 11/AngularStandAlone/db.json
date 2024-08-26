@@ -27,19 +27,28 @@
       "id": "c3456789-d90e-345f-g678-9012h34i5678",
       "name": "Product C Update",
       "price": 15.49,
-      "status": "Deactive",
+      "status": "Active",
       "quantity": 200,
       "createdAt": "2024-08-18T15:45:00",
-      "updatedAt": "2024-08-25T16:14:25.998Z"
+      "updatedAt": "2024-08-26T18:48:14.945Z"
     },
     {
       "id": "027d791f-8c5f-4f7d-90e3-cda2ef6c6ce4",
       "name": "Product C",
       "price": 200,
-      "status": "Active",
+      "status": "Deactive",
       "quantity": 200,
       "createdAt": "2024-08-25T09:43:51.948Z",
       "updatedAt": "2024-08-25T09:43:51.948Z"
+    },
+    {
+      "id": "9aec4077-d9f1-4220-8dd3-62638ccecb3e",
+      "name": "Product F",
+      "price": 200,
+      "status": "Active",
+      "quantity": 300,
+      "createdAt": "2024-08-26T18:52:13.244Z",
+      "updatedAt": "2024-08-26T18:52:13.244Z"
     }
   ],
   "users": [
