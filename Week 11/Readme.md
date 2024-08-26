@@ -781,4 +781,397 @@ By default, visit `http://localhost:4200` to see the login form in action.
 
 This setup provides a simple login component with a service for handling authentication. The component includes a form for user input, which is managed by Angular's reactive forms. The service communicates with an API to authenticate users, and the component handles responses and errors.
 
+## **Project with base project structure**
 
+Follow this example includes setting up the Angular CLI, generating the component and service, and implementing them with basic functionality.
+
+### 1. **Install Angular CLI (if not already installed)**
+
+```bash
+npm install -g @angular/cli
+```
+
+### 2. **Create a New Angular Project (if needed)**
+
+```bash
+ng new my-project-app
+cd my-project-app
+```
+
+### 3. **Set Up json-server**
+
+Create a db.json file in the root directory of the project to mock the data.
+
+```json
+{
+  "products": [
+    {
+      "id": "027d791f-8c5f-4f7d-90e3-cda2ef6c6ce4",
+      "name": "Product C",
+      "price": 200,
+      "status": "Active",
+      "quantity": 200,
+      "createdAt": "2024-08-25T09:43:51.948Z",
+      "updatedAt": "2024-08-25T09:43:51.948Z"
+    }
+  ]
+}
+```
+
+Add a script to the package.json to start the json-server.
+
+```json
+"scripts": {
+  "dev": "ng serve",
+  "dev:daata": "json-server --watch db.json --port 3000"
+}
+```
+
+Start the json-server in the different terminal.
+
+```
+npm run json-server
+```
+
+### 4. **Generate the Needed Component and Service**
+
+```bash
+ng generate component component_name
+ng generate service service_name
+```
+
+### 5. **Follow this structure**
+
+`sample structure`
+
+```
+src/
+  ├── app/
+  │   ├── app.module.ts                # Main module containing declarations and imports
+  │   ├── config/
+  │   │   └── app.constants.ts         # Configuration constants for the application
+  │   ├── core/
+  │   │   ├── interfaces/
+  │   │   │   ├── product.type.ts      # Type definitions for product-related data
+  │   │   │   └── status.type.ts       # Type definitions for status-related data
+  │   │   ├── model/
+  │   │   │   └── product.model.ts     # Data model for product entity
+  │   │   └── pipe/
+  │   │       └── phone.pipe.ts        # Pipe for transforming phone number data
+  │   ├── main/
+  │   │   ├── components/
+  │   │   │   ├── footer/              # Footer component
+  │   │   │   │   ├── footer.component.html  # Template for the footer component
+  │   │   │   │   ├── footer.component.css   # Styles for the footer component
+  │   │   │   │   └── footer.component.ts    # TypeScript logic for the footer component
+  │   │   │   ├── header/              # Header component
+  │   │   │   │   ├── header.component.html  # Template for the header component
+  │   │   │   │   ├── header.component.css   # Styles for the header component
+  │   │   │   │   └── header.component.ts    # TypeScript logic for the header component
+  │   │   │   └── modal-product/       # Product modal component
+  │   │   │       ├── modal-product.component.html  # Template for the product modal component
+  │   │   │       ├── modal-product.component.css   # Styles for the product modal component
+  │   │   │       └── modal-product.component.ts    # TypeScript logic for the product modal component
+  │   ├── pages/
+  │   │   ├── product/
+  │   │   │   ├── components/
+  │   │   │   │   ├── create-products/  # Component for creating products
+  │   │   │   │   │   ├── create-products.component.html  # Template for the create products component
+  │   │   │   │   │   ├── create-products.component.css   # Styles for the create products component
+  │   │   │   │   │   └── create-products.component.ts    # TypeScript logic for the create products component
+  │   │   │   │   ├── list-products/    # Component for listing products
+  │   │   │   │   │   ├── list-products.component.html  # Template for the list products component
+  │   │   │   │   │   ├── list-products.component.css   # Styles for the list products component
+  │   │   │   │   │   └── list-products.component.ts    # TypeScript logic for the list products component
+  │   │   │   │   └── products/         # Component for managing products
+  │   │   │   │       ├── products.component.html  # Template for the products component
+  │   │   │   │       ├── products.component.css   # Styles for the products component
+  │   │   │   │       └── products.component.ts    # TypeScript logic for the products component
+  │   │   │   └── product.routes.ts     # Routing configuration for product pages
+  │   │   └── not-found/                # Not found page component
+  │   │       ├── not-found.component.html  # Template for the not found page
+  │   │       ├── not-found.component.css   # Styles for the not found page
+  │   │       └── not-found.component.ts    # TypeScript logic for the not found page
+  │   ├── service/
+  │   │   └── product.service.ts        # Service for managing product-related operations
+  │   ├── app.component.ts              # Root component for the application
+  │   ├── app.component.html            # Template for the root component
+  │   ├── app.component.css             # Styles for the root component
+  │   ├── app.config.ts                 # Application configuration
+  │   └── app-routes.ts                 # Application routing configuration
+  └── main.ts                           # Entry point for the application
+```
+
+Here's an improved version of the documentation for the "Implement Component" section:
+
+---
+
+### 6. **Implement Component**
+
+To implement the component, refer to the codebase in the following repository:
+
+- **Repository Location**: [AngularStandAlone/src/app/](./AngularStandAlone/src/app/)
+
+In this repository, you'll find the implementation details for the component. Review the files in the specified directory to understand the component's structure, functionality, and integration.
+
+### **Sample “Parent listens for child event”**
+
+In Angular, using `@Input` and `@Output` is a common pattern for parent-child component communication. Here's a simple example demonstrating how a parent component listens to an event emitted by a child component.
+
+#### 1. **Child Component**
+
+**child.component.ts**
+
+```typescript
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from "@angular/core";
+import { trigger, transition, style, animate } from "@angular/animations";
+import { CommonModule } from "@angular/common";
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { Product } from "../../../core/interfaces/product.type";
+import { Status } from "../../../core/interfaces/status.type";
+import { ProductService } from "../../../service/product.service";
+
+@Component({
+  selector: "app-modal-product",
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  templateUrl: "./modal-product.component.html",
+  styleUrls: ["./modal-product.component.css"],
+})
+export class ModalProductComponent implements OnChanges {
+  @Input() isOpenModal = false;
+  @Input() product: Product = {
+    id: "",
+    name: "",
+    price: 0,
+    status: Status.Active,
+    quantity: 0,
+    createdAt: null,
+    updatedAt: null,
+  };
+
+  // Define an EventEmitter to emit events to the parent component
+  @Output() closeModal = new EventEmitter<void>();
+  @Output() productUpdated = new EventEmitter<void>();
+
+  close(): void {
+    this.closeModal.emit();
+    this.isEditing = false;
+  }
+
+  updateProduct(): void {
+    if (this.productForm.valid) {
+      const updatedProduct = this.productForm.getRawValue();
+      if (updatedProduct.id) {
+        // Update the updatedAt field with the current date and time
+        updatedProduct.updatedAt = new Date().toISOString();
+
+        this.productService
+          .updateProduct(updatedProduct.id, updatedProduct)
+          .subscribe({
+            next: (updatedProduct) => {
+              console.log("Product updated successfully:", updatedProduct);
+              this.isEditing = false;
+              this.productUpdated.emit(); // Emit event to notify parent
+              this.close();
+            },
+            error: (e) => console.error("Error updating product:", e),
+          });
+      } else {
+        console.error("Product ID is missing");
+      }
+    } else {
+      console.error("Form is invalid");
+    }
+  }
+}
+```
+
+**child.component.html**
+
+```html
+<div
+  *ngIf="isOpenModal"
+  [@enterAnimation]
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+>
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-auto p-6">
+    <form [formGroup]="productForm" (ngSubmit)="updateProduct()">
+      <div class="modal-header flex justify-between items-center mb-4">
+        <h5 class="text-xl font-semibold">
+          {{ isEditing ? "Edit Product" : "View Product" }}
+        </h5>
+        <button
+          type="button"
+          class="text-gray-500 hover:text-gray-700"
+          (click)="close()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body space-y-4">Body Form</div>
+      <div class="modal-footer mt-4 flex justify-end space-x-2">
+        <button
+          type="button"
+          class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded"
+          (click)="close()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+          *ngIf="!isEditing"
+          (click)="startEditing()"
+        >
+          Edit
+        </button>
+        <button
+          type="submit"
+          class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+          *ngIf="isEditing"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+```
+
+#### 2. **Parent Component**
+
+**parent.component.ts**
+
+```typescript
+// list-products.component.ts
+
+import { Component, OnInit, Input } from "@angular/core";
+import { AgGridAngular, AgGridModule } from "ag-grid-angular";
+import { ColDef } from "ag-grid-community";
+import { ProductService } from "../../../../service/product.service";
+import { Product } from "../../../../core/interfaces/product.type";
+import { CurrencyPipe, DatePipe } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { Status } from "../../../../core/interfaces/status.type";
+import { ListProductsActionComponent } from "../../../../main/components/list-products-action/list-products-action.component";
+import { ModalProductComponent } from "../../../../main/components/modal-product/modal-product.component";
+
+@Component({
+  selector: "app-list-products",
+  standalone: true,
+  imports: [
+    AgGridModule,
+    AgGridAngular,
+    FormsModule,
+    ListProductsActionComponent,
+    ModalProductComponent,
+  ],
+  templateUrl: "./list-products.component.html",
+  styleUrls: ["./list-products.component.css"],
+  providers: [CurrencyPipe, DatePipe],
+})
+export class ListProductsComponent implements OnInit {
+  products: Product[] = [];
+  rowData: Product[] = [];
+  productName = "";
+  currentProduct: Product = {
+    id: "",
+    name: "",
+    price: 0,
+    status: Status.Active,
+    quantity: 0,
+    createdAt: null,
+    updatedAt: null,
+  };
+  @Input() isOpenModal = false;
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+  onProductUpdated(): void {
+    this.loadProducts();
+  }
+
+  setActiveProduct(product: Product, index: number): void {
+    this.isOpenModal = true;
+    this.currentProduct = product;
+    this.currentIndex = index;
+    console.log("Modal opened for product ID:", product.id);
+  }
+
+  onCloseModal(): void {
+    this.isOpenModal = false;
+  }
+}
+```
+
+**parent.component.html**
+
+```html
+<section class="container">
+  <ag-grid-angular
+    class="ag-theme-quartz"
+    style="height: 350px; width: 100%"
+    [rowData]="rowData"
+    [columnDefs]="colDefs"
+    [pagination]="true"
+    [paginationPageSize]="paginationPageSize"
+    [paginationPageSizeSelector]="paginationPageSizeSelector"
+  ></ag-grid-angular>
+  <app-modal-product
+    [isOpenModal]="isOpenModal"
+    [product]="currentProduct"
+    (closeModal)="onCloseModal()"
+    (productUpdated)="onProductUpdated()"
+  ></app-modal-product>
+</section>
+```
+
+### Explanation
+
+1. **Child Component**:
+
+   - **`@Output`**: This decorator defines an `EventEmitter` property named `notify`. The `EventEmitter` is used to send data from the child to the parent component.
+   - **`sendNotification()`**: This method emits an event with a message when a button is clicked.
+
+2. **Parent Component**:
+   - **`handleNotification(message: string)`**: This method receives the message emitted by the child component and handles it. In this example, it logs the message to the console.
+   - **`<app-child (notify)="handleNotification($event)"></app-child>`**: This syntax in the parent component's template listens for the `notify` event from the child component. When the event is emitted, it calls `handleNotification($event)` with the event data.
+
+### Summary
+
+- **Child Component**: Emits an event using `@Output` and `EventEmitter`.
+- **Parent Component**: Listens to the child's event using `(eventName)="handlerMethod($event)"` syntax.
+
+This setup allows for clear and effective communication between components in Angular.
+
+### 📷 Documentation Result
+
+1. **List Product**:
+   ![list product](./assets//images/list.png)
+2. **Details Product**:
+   ![details product](./assets//images/modaldetails.png)
+3. **Create Product**:
+   ![create product](./assets//images/create.png)
+4. **Update Product**:
+   ![update product](./assets//images/modalupdate.png)
+5. **Delete Product**:
+   ![delete product](./assets//images/delete.png)
+6. **Toggle Status Product**:
+   ![toggle status product](./assets//images/togglestatus.png)
+7. **Search Product**:
+   ![search product](./assets//images/search.png)
