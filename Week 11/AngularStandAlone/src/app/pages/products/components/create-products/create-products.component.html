@@ -15,6 +15,13 @@
           type="text"
           class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
         />
+        <div
+          *ngIf="
+            productForm.get('name')?.invalid && productForm.get('name')?.touched
+          "
+        >
+          <small class="text-red-500">Name is required</small>
+        </div>
       </div>
 
       <div>
@@ -27,6 +34,14 @@
           type="number"
           class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
         />
+        <div
+          *ngIf="
+            productForm.get('price')?.invalid &&
+            productForm.get('price')?.touched
+          "
+        >
+          <small class="text-red-500">Price must be a positive number</small>
+        </div>
       </div>
       <div>
         <label class="text-gray-800 font-semibold" for="productStatus"
@@ -51,6 +66,14 @@
           type="number"
           class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
         />
+        <div
+          *ngIf="
+            productForm.get('quantity')?.invalid &&
+            productForm.get('quantity')?.touched
+          "
+        >
+          <small class="text-red-500">Quantity must be a positive number</small>
+        </div>
       </div>
     </div>
 
@@ -65,7 +88,7 @@
       </a>
       <button
         type="submit"
-        class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform rounded-md bg-blue-500 hover:bg-blue-600 "
+        class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform rounded-md bg-blue-500 hover:bg-blue-600"
       >
         Save
       </button>
