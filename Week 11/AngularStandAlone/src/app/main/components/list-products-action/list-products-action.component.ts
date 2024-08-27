@@ -53,8 +53,6 @@ export class ListProductsActionComponent implements ICellRendererAngularComp {
     if (input) {
       // Get current status from input (checked/unchecked)
       const currentStatus = this.params.data.status;
-      const newStatus = input.checked ? Status.Active : Status.Deactive;
-
       if (
         confirm('Are you sure you want to change the status of this product?')
       ) {
