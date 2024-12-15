@@ -1,0 +1,29 @@
+<section class="bg-white border-b-2">
+  <div class="mx-auto w-full px-4 py-6 sm:px-6 lg:px-8 mb-4">
+    <div
+      class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
+    >
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Products</h1>
+        <div class="text-xs font-semibold">
+          {{ currentDate | date : "fullDate" }}
+        </div>
+        <p class="mt-1.5 text-sm text-gray-500">
+          List Products of AngularStandAlone Project
+        </p>
+      </div>
+
+      <div>
+        <a routerLink="/products/create">
+          <button
+            class="inline-block rounded bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+            type="button"
+          >
+            Add Products
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<router-outlet></router-outlet>

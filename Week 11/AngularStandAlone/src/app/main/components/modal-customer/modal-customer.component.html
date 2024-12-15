@@ -1,0 +1,122 @@
+<div class="relative flex justify-center">
+  <ng-container *ngIf="isOpenModal">
+    <div
+      @enterAnimation
+      class="fixed inset-0 z-10 overflow-y-auto"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <span
+          class="hidden sm:inline-block sm:h-screen sm:align-middle"
+          aria-hidden="true"
+          >&#8203;</span
+        >
+
+        <div
+          class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
+        >
+          <h3
+            class="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white"
+            id="modal-title"
+          >
+            Edit Customer Details
+          </h3>
+          <form (ngSubmit)="updateCustomer()">
+            <div class="mt-2">
+              <label
+                for="firstName"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >First Name</label
+              >
+              <input
+                id="firstName"
+                [(ngModel)]="customer.firstName"
+                name="firstName"
+                type="text"
+                class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                [disabled]="!isEditing"
+                required
+              />
+            </div>
+            <div class="mt-2">
+              <label
+                for="lastName"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Last Name</label
+              >
+              <input
+                id="lastName"
+                [(ngModel)]="customer.lastName"
+                name="lastName"
+                type="text"
+                class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                [disabled]="!isEditing"
+                required
+              />
+            </div>
+            <div class="mt-2">
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Email</label
+              >
+              <input
+                id="email"
+                [(ngModel)]="customer.email"
+                name="email"
+                type="email"
+                class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                [disabled]="!isEditing"
+                required
+              />
+            </div>
+            <div class="mt-2">
+              <label
+                for="phone"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Phone</label
+              >
+              <input
+                id="phone"
+                [(ngModel)]="customer.phone"
+                name="phone"
+                type="tel"
+                class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                [disabled]="!isEditing"
+                required
+              />
+            </div>
+            <div class="mt-4 flex justify-end">
+              <button
+                type="button"
+                (click)="close()"
+                class="px-4 py-2 text-white bg-gray-500 rounded-md mr-2"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                (click)="startEditing()"
+                class="px-4 py-2 text-white bg-yellow-500 rounded-md mr-2"
+                *ngIf="!isEditing"
+              >
+                Edit
+              </button>
+              <button
+                type="submit"
+                class="px-4 py-2 text-white bg-blue-500 rounded-md"
+                *ngIf="isEditing"
+              >
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

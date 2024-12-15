@@ -1,0 +1,139 @@
+<section class="container">
+  <div class="flex flex-col">
+    <div class="-my-2 overflow-x-auto">
+      <div class="inline-block w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="w-full flex justify-between items-center">
+          <div class="w-1/3 py-4">
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg
+                  class="w-5 h-5 text-gray-400"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </span>
+              <input
+                type="text"
+                class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                placeholder="Search by firstname"
+                [(ngModel)]="firstName"
+                (input)="onSearch()"
+              />
+            </div>
+          </div>
+          <div>
+            <p>You're searching {{ firstName }}</p>
+          </div>
+        </div>
+        <div
+          class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
+        >
+          <table class="w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  class="py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-800"
+                >
+                  <button class="flex items-center gap-x-3 focus:outline-none">
+                    <span>Firstname</span>
+                  </button>
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-12 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-800"
+                >
+                  Lastname
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-4 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-800"
+                >
+                  Email
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-4 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-800"
+                >
+                  Phone
+                </th>
+
+                <th scope="col" class="relative py-3.5 px-4">
+                  <span class="sr-only">Edit</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="bg-white divide-y divide-gray-200 dark:divide-gray-700"
+            >
+              @for (customer of customers; track customer.id; let i = $index) {
+              <tr>
+                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                  <div>
+                    <h2 class="font-medium text-gray-800">
+                      {{ customer.firstName }}
+                    </h2>
+                  </div>
+                </td>
+                <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                  <div>
+                    <h2 class="font-medium text-gray-800">
+                      {{ customer.lastName }}
+                    </h2>
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                  <div>
+                    <h2 class="font-medium text-gray-800">
+                      {{ customer.email }}
+                    </h2>
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                  <div>
+                    <h2 class="font-medium text-gray-800">
+                      {{ customer.phone | phone }}
+                    </h2>
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                  <button
+                    (click)="setActiveCustomer(customer, i)"
+                    class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
+                  >
+                    Open
+                  </button>
+                  <button
+                    (click)="deleteCustomer(customer.id)"
+                    class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-modal-customer
+    [isOpenModal]="isOpenModal"
+    [customer]="currentCustomer"
+    (closeModal)="handleCloseModal()"
+    (customerUpdated)="loadCustomers()"
+  ></app-modal-customer>
+</section>
